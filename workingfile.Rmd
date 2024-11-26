@@ -44,6 +44,12 @@ summary(data_clean)
 
 ```
 
+### Clustering 
+```{r}
+
+```
+
+
 ### Fit linear regression model 
 ```{r}
 # Fit the logistic regression model
