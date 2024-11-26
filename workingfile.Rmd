@@ -1,89 +1,89 @@
 ---
 title: "biostats"
-author: "Michelle Wong"
-date: "2024-11-26"
-output: html_document
+author: "Group 5"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: 2
+    number_sections: no
+    theme: cerulean
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+  word_document:
+    toc: no
+  pdf_document:
+    toc: no
 ---
+
+```{r,echo=FALSE}
+knitr::opts_chunk$set(cache=TRUE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, tidy.opts=list(width.cutoff=60),tidy=TRUE)
+```
 
 ```{r}
 library(readxl)
-data <- read_excel("cardiac_arrests.xlsx")
+cardiac_data <- read_excel("cardiac_arrests.xlsx")
 head(data)
 ```
 
 ### Cleaning 
 ```{r}
 library(dplyr)
+library(ggplot2)
+library(tidyr)
 
-# Replace the 9999 values with NA (missing data) for relevant variables
-data_clean <- data %>%
-  mutate(
-    sex = factor(sex),
-    race = factor(race),
-    amc = recode(amc, `9999` = NA),
-    op_level = recode(op_level, `99` = NA, `9999` = NA),
-    cpr_type = recode(cpr_type, `9999` = NA),
-    hist1 = recode(hist1, `9999` = NA),
-    hist2 = recode(hist2, `9999` = NA),
-    hist3 = recode(hist3, `9999` = NA),
-    hist4 = recode(hist4, `9999` = NA),
-    hist5 = recode(hist5, `9999` = NA),
-    etco2 = recode(etco2, `9999` = NA),
-    rosc = recode(rosc, `9999` = NA),
-    survival = recode(survival, `9999` = NA),
-    time_approx = recode(time_approx, `9999` = NA),
-    time_to_determination = recode(time_to_determination, `9999` = NA)
-  )
-
-# Remove rows with missing target variable (survival)
-data_clean <- data_clean %>%
-  filter(!is.na(survival))
-
-# Check for missing data in other variables
-summary(data_clean)
-
+cardiac_data <- cardiac_data %>%
+  mutate(across(everything(), ~ replace(.x, .x == 9999, NA))) %>%
+  na.omit()
 ```
 
-### Clustering 
+### EDA 
 ```{r}
+# AMC Distribution by Medical History
+cardiac_data %>%
+  select(amc, starts_with("hist")) %>%
+  pivot_longer(cols = starts_with("hist"), names_to = "Medical_History", values_to = "Presence") %>%
+  filter(!is.na(Presence)) %>%
+  group_by(amc, Medical_History) %>%
+  summarise(Count = sum(Presence, na.rm = TRUE)) %>%
+  ggplot(aes(x = factor(amc, labels = c("LV", "LVOT/Aortic Root")), y = Count, fill = Medical_History)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Medical History Counts by AMC Type", x = "AMC Type", y = "Count") +
+  theme_minimal()
 
+# Boxplot of EtCO2 by AMC and Medical History
+ggplot(cardiac_data, aes(x = factor(amc, labels = c("LV", "LVOT/Aortic Root")), y = etco2, fill = factor(hist1))) +
+  geom_boxplot() +
+  labs(title = "EtCO2 by AMC and History of Coronary Artery Disease (hist1)",
+       x = "AMC Type",
+       y = "EtCO2",
+       fill = "History of CAD (hist1)") +
+  theme_minimal()
 ```
 
-
-### Fit linear regression model 
+### ANOVA
 ```{r}
-# Fit the logistic regression model
-logit_model <- glm(survival ~ age + sex + race + amc + op_level + cpr_type + 
-                   hist1 + hist2 + hist3 + hist4 + hist5 + etco2 + rosc + 
-                   time_approx + time_to_determination, 
-                   data = data_clean, 
-                   family = binomial(link = "logit"))
+# Linear model with interactions
+interaction_model <- lm(etco2 ~ amc * (hist1 + hist2 + hist3 + hist4 + hist5), data = cardiac_data)
 
-# View the summary of the model
-summary(logit_model)
+# Summary of the model
+summary(interaction_model)
 
-```
+# ANOVA to test interaction significance
+anova(interaction_model)
 
-### Coefficients & Odds Ratios 
-```{r}
-exp(coef(logit_model))
-```
-
-### Model evaluation 
-```{r}
-library(pROC)
-
-# Predicted probabilities
-pred_probs <- predict(logit_model, type = "response")
-
-# AUC
-roc_curve <- roc(data_clean$survival, pred_probs)
-auc(roc_curve)
+# Check the residuals for model assumptions
+par(mfrow = c(2, 2))  # Display diagnostic plots
+plot(interaction_model)
 ```
 
 ## Introduction
 
-Scientific Question:
+Scientific Question: Does the relationship between EtCO2 and AMC behave differently in the presence
+of relevant medical history? 
+
 Clinical relevance:
 
 ## Methods
