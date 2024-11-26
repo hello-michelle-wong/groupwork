@@ -16,6 +16,9 @@ output:
     toc: no
   pdf_document:
     toc: no
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r,echo=FALSE}
@@ -28,7 +31,8 @@ cardiac_data <- read_excel("cardiac_arrests.xlsx")
 head(data)
 ```
 
-### Cleaning 
+### Cleaning
+
 ```{r}
 library(dplyr)
 library(ggplot2)
@@ -85,7 +89,8 @@ cleaned_data <- na.omit(data)
 sum(is.na(cleaned_data))
 ```
 
-### EDA 
+### EDA
+
 ```{r}
 # AMC Distribution by Medical History
 cardiac_data %>%
@@ -109,7 +114,11 @@ ggplot(cardiac_data, aes(x = factor(amc, labels = c("LV", "LVOT/Aortic Root")), 
   theme_minimal()
 ```
 
+<<<<<<< HEAD
 ### More plots
+=======
+### ANOVA
+
 ```{r}
 library(ggplot2)
 
@@ -244,52 +253,46 @@ print(model_comparison)
 
 ## Introduction
 
-### Scientific Question: 
-Does the relationship between EtCO2 and AMC behave differently in the presenceof relevant medical history? 
+### Scientific Question:
+
+Does the relationship between EtCO2 and AMC behave differently in the
+presenceof relevant medical history?
 
 ### Clinical relevance:
+
 Observing the relationship between EtCO2 (end-tidal carbon dioxide) and
 AMC (area of maximum compression) is crucial to understanding the
 quality of chest compression during CPR (cardiopulmonary resuscitation),
 a life-saving procedure during cardiac arrests. Chest compressions are
-crucial to reviving a patient or achieving ROSC or Return to
-Spontaneous Circulation, though they requires adequate rate, depth, and
-location for the best results. However, CPR guidelines are not as
-precise, as differences in body size and histories of chronic disease
-can alter the heart's location. When patients have compression in the
-aortic root, there is an obstruction of blood flow from the heart and
-can limit effective perfusion and worsen the prognosis. Compressions
-over the left ventricle or LV can improve the blood circulation and lead
-to higher-quality CPR. This relationship between EtCO2 (where higher
-levels have been shown to correlate with better blood flow from past
-studies) and AMC may differ dependent on a patient's history, as these
-conditions can impact the ventilation-perfusion mismatch or other
-presenting symptoms.
+crucial to reviving a patient or achieving ROSC or Return to Spontaneous
+Circulation, though they requires adequate rate, depth, and location for
+the best results. However, CPR guidelines are not as precise, as
+differences in body size and histories of chronic disease can alter the
+heart's location. When patients have compression in the aortic root,
+there is an obstruction of blood flow from the heart and can limit
+effective perfusion and worsen the prognosis. Compressions over the left
+ventricle or LV can improve the blood circulation and lead to
+higher-quality CPR. This relationship between EtCO2 (where higher levels
+have been shown to correlate with better blood flow from past studies)
+and AMC may differ dependent on a patient's history, as these conditions
+can impact the ventilation-perfusion mismatch or other presenting
+symptoms.
 
 ## Methods
 
-Design of Study:
-Data Set Details:
-Cohort:
-Chosen Analysis Methodology:
+Design of Study: Data Set Details: Cohort: Chosen Analysis Methodology:
 Rationale:
 
 ## Results
 
-Tables
-Figures
-Statistics
+Tables Figures Statistics
 
-Exploratory/Descriptive Analysis:
-Main Statistical Analysis:
+Exploratory/Descriptive Analysis: Main Statistical Analysis:
 
 ## Conclusions
 
-Main Findings:
-Answer Scientific Question:
-Limitations:
+Main Findings: Answer Scientific Question: Limitations:
 
 ##References
 
-Citations
-References
+Citations References
