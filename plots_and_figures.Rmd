@@ -25,11 +25,12 @@ library(ggplot2)
 
 ggplot(data, aes(x=as.factor(amc), y=etco2, fill=as.factor(hist1)))+
   geom_boxplot()+
-  labs(x="AMC", y="etco2", fill="History of Coronary Artery Disease")+
-  scale_color_manual(
+    scale_color_manual(
     values = c("purple", "blue"),  # Set custom colors for the levels
     labels = c("No", "Yes")  # Custom legend labels
-  )
+  )+
+  labs(x="AMC", y="etco2", fill="History of Coronary Artery Disease")
+
 
 ```
 ```{r}
