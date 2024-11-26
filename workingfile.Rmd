@@ -1,9 +1,26 @@
 ---
 title: "biostats"
-author: "Michelle Wong"
-date: "2024-11-26"
-output: html_document
+author: "Group 5"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: 2
+    number_sections: no
+    theme: cerulean
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+  word_document:
+    toc: no
+  pdf_document:
+    toc: no
 ---
+
+```{r,echo=FALSE}
+knitr::opts_chunk$set(cache=TRUE, echo=TRUE, error=FALSE, message=FALSE, warning=FALSE, tidy.opts=list(width.cutoff=60),tidy=TRUE)
+```
 
 ```{r}
 library(readxl)
@@ -41,7 +58,6 @@ data_clean <- data_clean %>%
 
 # Check for missing data in other variables
 summary(data_clean)
-
 ```
 
 ### Clustering 
@@ -59,9 +75,7 @@ logit_model <- glm(survival ~ age + sex + race + amc + op_level + cpr_type +
                    data = data_clean, 
                    family = binomial(link = "logit"))
 
-# View the summary of the model
 summary(logit_model)
-
 ```
 
 ### Coefficients & Odds Ratios 
