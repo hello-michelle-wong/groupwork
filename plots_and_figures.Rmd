@@ -1,0 +1,45 @@
+---
+title: "Visualization of Research Q"
+author: "Yael Yossefy"
+date: "2024-11-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Does the relationship between EtCO2 and AMC behave differently in the presence
+of relevant medical history? 
+
+```{r}
+library(readxl)
+data <- read_excel("cardiac_arrests.xlsx")
+data[data==9999] <- NA
+head(data)
+data <- na.omit(data)
+```
+
+```{r}
+library(ggplot2)
+
+ggplot(data, aes(x=as.factor(amc), y=etco2, fill=as.factor(hist1)))+
+  geom_boxplot()+
+  labs(fill="History of Coronary Artery Disease")
+
+```
+```{r}
+ggplot(data, aes(x = as.factor(amc), y = etco2)) +  
+  geom_boxplot() +
+  labs(x = "Number of Cylinders", y = "Miles per Gallon") +
+  theme_minimal()
+```
+
+
+```{r}
+ggplot(mtcars, aes(x = amc, y = etco2)) +
+  geom_violin() +
+  labs(x = "Number of Cylinders", y = "Miles per Gallon") +
+  theme_minimal()
+
+```
