@@ -162,16 +162,85 @@ ggplot(cleaned_data, aes(x = etco2, color = hist2)) +
   theme_minimal()
 ```
 
+## check assumptions, anova, homeostatisicty, bivariate 
 
-### ANOVA
+### lm - ANOVA/lm 
 ```{r}
-interaction_model <- glm(amc ~ etco2 * hist1 + etco2 * hist2 + etco2 * hist3 + 
-                         etco2 * hist4 + etco2 * hist5, 
-                         data = cleaned_data, family = binomial)
+# Fit a linear regression model
+normal_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + hist4 + hist5, 
+                   data = cleaned_data)
 
-summary(interaction_model)
+# Summary of the linear model
+summary(normal_model)
+
+# Diagnostic plots to evaluate the model
+par(mfrow = c(2, 2)) # Layout for multiple diagnostic plots
+plot(normal_model)
+par(mfrow = c(1, 1)) # Reset layout
+
 ```
 
+```{r}
+# Fit the interaction linear regression model
+interaction_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + 
+                          hist4 + hist5 + amc:hist1 + amc:hist2 + amc:hist3 + 
+                          amc:hist4 + amc:hist5, 
+                        data = cleaned_data)
+
+# Summary of the interaction model
+summary(interaction_model)
+
+# Diagnostic plots for the interaction model
+par(mfrow = c(2, 2)) # Layout for multiple diagnostic plots
+plot(interaction_model)
+par(mfrow = c(1, 1)) # Reset layout
+```
+
+colinearity 
+```{r}
+# Load necessary library
+library(car)
+
+# Check Variance Inflation Factor (VIF) for the normal model
+vif(normal_model)
+
+# Check VIF for the interaction model
+vif(interaction_model)
+
+# Drop variables with high VIF iteratively, or center/scale predictors
+# Example: If hist1 has a high VIF, remove it
+reduced_model <- lm(etco2 ~ amc + hist2 + hist3 + hist4 + hist5 + 
+                    amc:hist2 + amc:hist3 + amc:hist4 + amc:hist5, 
+                    data = cleaned_data)
+
+# Check VIF again for the reduced model
+vif(reduced_model)
+
+```
+
+```{r}
+# Use stepwise selection based on AIC
+step_model_aic <- step(normal_model, 
+                       scope = list(lower = ~1, upper = interaction_model), 
+                       direction = "both", 
+                       k = 2) # k = 2 for AIC
+
+# Use stepwise selection based on BIC
+step_model_bic <- step(normal_model, 
+                       scope = list(lower = ~1, upper = interaction_model), 
+                       direction = "both", 
+                       k = log(nrow(cleaned_data))) # k = log(n) for BIC
+
+# Compare models using AIC and BIC
+aic_values <- c(AIC(normal_model), AIC(interaction_model), AIC(step_model_aic))
+bic_values <- c(BIC(normal_model), BIC(interaction_model), BIC(step_model_bic))
+
+model_comparison <- data.frame(Model = c("Normal Model", "Interaction Model", "Stepwise AIC Model"),
+                                AIC = aic_values,
+                                BIC = bic_values)
+print(model_comparison)
+
+```
 
 ## Introduction
 
