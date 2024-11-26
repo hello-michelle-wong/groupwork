@@ -34,51 +34,11 @@ library(dplyr)
 
 cardiac_data <- cardiac_data %>%
   mutate(across(everything(), ~ replace(.x, .x == 9999, NA)))
-
 ```
 
 ### Clustering 
 ```{r}
 
-```
-
-
-### Fit logistic regression model 
-```{r}
-# Load necessary packages
-library(readxl)
-library(dplyr)
-
-# 2. Logistic Regression: Predicting ROSC
-glm_rosc <- glm(rosc ~ age + sex + race + amc + etco2 + cpr_type + time_to_determination +
-                  hist1 + hist2 + hist3 + hist4 + hist5,
-                data = cardiac_data, family = binomial)
-
-summary(glm_rosc)
-
-# 3. Logistic Regression: Predicting Survival
-glm_survival <- glm(survival ~ age + sex + race + amc + etco2 + cpr_type + time_to_determination +
-                      hist1 + hist2 + hist3 + hist4 + hist5,
-                    data = cardiac_data, family = binomial)
-
-summary(glm_survival)
-```
-
-### Coefficients & Odds Ratios 
-```{r}
-exp(coef(logit_model))
-```
-
-### Model evaluation 
-```{r}
-library(pROC)
-
-# Predicted probabilities
-pred_probs <- predict(logit_model, type = "response")
-
-# AUC
-roc_curve <- roc(data_clean$survival, pred_probs)
-auc(roc_curve)
 ```
 
 ## Introduction
