@@ -76,50 +76,67 @@ summary(interaction_model)
 library(ggplot2)
 
 # hist1
-ggplot(cleaned_data, aes(x = etco2, color = hist1)) +
+h1 <- ggplot(cleaned_data, aes(x = etco2, color = hist1)) +
   geom_density() +
   facet_wrap(~ amc) +
   labs(title = "Relationship between EtCO2 and AMC by Coronary Artery Disease History",
        x = "EtCO2 (mmHg)", y = "Density") +
   theme_minimal()
+
+h1
 ```
 
 ```{r}
 # hist2
-ggplot(cleaned_data, aes(x = etco2, color = hist2)) +
+h2 <- ggplot(cleaned_data, aes(x = etco2, color = hist2)) +
   geom_density() +
   facet_wrap(~ amc) +
   labs(title = "Relationship between EtCO2 and AMC by Congestive Heart Failure History",
        x = "EtCO2 (mmHg)", y = "Density") +
   theme_minimal()
+
+h2
 ```
 
 ```{r}
 # hist3
-ggplot(cleaned_data, aes(x = etco2, color = hist3)) +
+h3 <- ggplot(cleaned_data, aes(x = etco2, color = hist3)) +
   geom_density() +
   facet_wrap(~ amc) +
   labs(title = "Relationship between EtCO2 and AMC by ",
        x = "EtCO2 (mmHg)", y = "Density") +
   theme_minimal()
+
+h3
 ```
 
 ```{r}
 # hist4
-ggplot(cleaned_data, aes(x = etco2, color = hist4)) +
+h4 <- ggplot(cleaned_data, aes(x = etco2, color = hist4)) +
   geom_density() +
   facet_wrap(~ amc) +
   labs(title = "Relationship between EtCO2 and AMC by ",
        x = "EtCO2 (mmHg)", y = "Density") +
   theme_minimal()
+
+h4
 ```
 
 ```{r}
 # hist5
-ggplot(cleaned_data, aes(x = etco2, color = hist2)) +
+h5 <- ggplot(cleaned_data, aes(x = etco2, color = hist2)) +
   geom_density() +
   facet_wrap(~ amc) +
   labs(title = "Relationship between EtCO2 and AMC",
        x = "EtCO2 (mmHg)", y = "Density") +
   theme_minimal()
+
+h5
+```
+
+
+```{r}
+library(gridExtra)
+
+grid.arrange(h1, h2, h3, h4, h5, ncol = 2)
 ```
