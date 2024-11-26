@@ -75,3 +75,35 @@ roc_curve <- roc(data_clean$survival, pred_probs)
 auc(roc_curve)
 ```
 
+## Introduction
+
+Scientific Question:
+Clinical relevance:
+
+## Methods
+
+Design of Study:
+Data Set Details:
+Cohort:
+Chosen Analysis Methodology:
+Rationale:
+
+## Results
+
+Tables
+Figures
+Statistics
+
+Exploratory/Descriptive Analysis:
+Main Statistical Analysis:
+
+## Conclusions
+
+Main Findings:
+Answer Scientific Question:
+Limitations:
+
+##References
+
+Citations
+References
