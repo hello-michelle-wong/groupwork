@@ -68,15 +68,31 @@ summary(data_clean)
 
 ### Fit linear regression model 
 ```{r}
-# Fit the logistic regression model
-logit_model <- glm(survival ~ age + sex + race + amc + op_level + cpr_type + 
-                   hist1 + hist2 + hist3 + hist4 + hist5 + etco2 + rosc + 
-                   time_approx + time_to_determination, 
-                   data = data_clean, 
-                   family = binomial(link = "logit"))
+# Load necessary packages
+library(readxl)
+library(dplyr)
 
-summary(logit_model)
+cardiac_data <- data 
+
+cardiac_data <- cardiac_data %>%
+  mutate(across(everything(), ~ replace(.x, .x == 9999, NA)))
+
+# 2. Logistic Regression: Predicting ROSC
+glm_rosc <- glm(rosc ~ age + sex + race + amc + etco2 + cpr_type + time_to_determination +
+                  hist1 + hist2 + hist3 + hist4 + hist5,
+                data = cardiac_data, family = binomial)
+
+summary(glm_rosc)
+
+# 3. Logistic Regression: Predicting Survival
+glm_survival <- glm(survival ~ age + sex + race + amc + etco2 + cpr_type + time_to_determination +
+                      hist1 + hist2 + hist3 + hist4 + hist5,
+                    data = cardiac_data, family = binomial)
+
+summary(glm_survival)
 ```
+
+
 
 ### Coefficients & Odds Ratios 
 ```{r}
