@@ -1,0 +1,14 @@
+---
+title: "biostats"
+author: "Michelle Wong"
+date: "2024-11-26"
+output: html_document
+---
+
+```{r}
+library(readxl)
+data <- read_excel("cardiac_arrests.xlsx")
+head(data)
+```
+
+
