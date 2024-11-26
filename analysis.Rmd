@@ -1,0 +1,125 @@
+---
+title: "Untitled"
+author: "Dirgh Shah"
+date: "2024-11-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(readxl)
+data <- read_excel("cardiac_arrests.xlsx")
+
+data[data == 9999] <- NA
+
+data$race <- factor(data$race, levels = c(1, 2, 3, 4, 99), 
+                    labels = c("White", "Black/African American", 
+                               "Asian", "Latinx", "Other"))
+
+data$amc <- factor(data$amc, levels = c(1, 2), 
+                   labels = c("LV", "LVOT/Aortic root"))
+
+data$op_level <- factor(data$op_level, levels = c(1, 2, 3, 99), 
+                        labels = c("Attending physician", "Fellow", 
+                                   "Resident", "Other"))
+
+data$cpr_type <- factor(data$cpr_type, levels = c(1, 2, 3), 
+                        labels = c("Manual", "Mechanical", "Alternating"))
+
+data$hist1 <- factor(data$hist1, levels = c(0, 1), 
+                     labels = c("No", "Yes"))
+
+data$hist2 <- factor(data$hist2, levels = c(0, 1), 
+                     labels = c("No", "Yes"))
+
+data$hist3 <- factor(data$hist3, levels = c(0, 1), 
+                     labels = c("No", "Yes"))
+
+data$hist4 <- factor(data$hist4, levels = c(0, 1), 
+                     labels = c("No", "Yes"))
+
+data$hist5 <- factor(data$hist5, levels = c(0, 1), 
+                     labels = c("No", "Yes"))
+
+data$rosc <- factor(data$rosc, levels = c(0, 1), 
+                    labels = c("No", "Yes"))
+
+data$survival <- factor(data$survival, levels = c(0, 1), 
+                        labels = c("No", "Yes"))
+
+data$time_approx <- factor(data$time_approx, levels = c(0, 1), 
+                           labels = c("Known", "Approximated"))
+
+summary(data)
+sum(is.na(data))
+```
+
+```{r}
+cleaned_data <- na.omit(data)
+
+sum(is.na(cleaned_data))
+```
+
+```{r}
+interaction_model <- glm(amc ~ etco2 * hist1 + etco2 * hist2 + etco2 * hist3 + 
+                         etco2 * hist4 + etco2 * hist5, 
+                         data = cleaned_data, family = binomial)
+
+summary(interaction_model)
+```
+
+```{r}
+library(ggplot2)
+
+# hist1
+ggplot(cleaned_data, aes(x = etco2, color = hist1)) +
+  geom_density() +
+  facet_wrap(~ amc) +
+  labs(title = "Relationship between EtCO2 and AMC by Coronary Artery Disease History",
+       x = "EtCO2 (mmHg)", y = "Density") +
+  theme_minimal()
+```
+
+```{r}
+# hist2
+ggplot(cleaned_data, aes(x = etco2, color = hist2)) +
+  geom_density() +
+  facet_wrap(~ amc) +
+  labs(title = "Relationship between EtCO2 and AMC by Congestive Heart Failure History",
+       x = "EtCO2 (mmHg)", y = "Density") +
+  theme_minimal()
+```
+
+```{r}
+# hist3
+ggplot(cleaned_data, aes(x = etco2, color = hist3)) +
+  geom_density() +
+  facet_wrap(~ amc) +
+  labs(title = "Relationship between EtCO2 and AMC by ",
+       x = "EtCO2 (mmHg)", y = "Density") +
+  theme_minimal()
+```
+
+```{r}
+# hist4
+ggplot(cleaned_data, aes(x = etco2, color = hist4)) +
+  geom_density() +
+  facet_wrap(~ amc) +
+  labs(title = "Relationship between EtCO2 and AMC by ",
+       x = "EtCO2 (mmHg)", y = "Density") +
+  theme_minimal()
+```
+
+```{r}
+# hist5
+ggplot(cleaned_data, aes(x = etco2, color = hist2)) +
+  geom_density() +
+  facet_wrap(~ amc) +
+  labs(title = "Relationship between EtCO2 and AMC",
+       x = "EtCO2 (mmHg)", y = "Density") +
+  theme_minimal()
+```
