@@ -31,20 +31,59 @@ head(data)
 ### Cleaning 
 ```{r}
 library(dplyr)
+library(ggplot2)
+library(tidyr)
 
 cardiac_data <- cardiac_data %>%
-  mutate(across(everything(), ~ replace(.x, .x == 9999, NA)))
+  mutate(across(everything(), ~ replace(.x, .x == 9999, NA))) %>%
+  na.omit()
 ```
 
-### Clustering 
+### EDA 
 ```{r}
+# AMC Distribution by Medical History
+cardiac_data %>%
+  select(amc, starts_with("hist")) %>%
+  pivot_longer(cols = starts_with("hist"), names_to = "Medical_History", values_to = "Presence") %>%
+  filter(!is.na(Presence)) %>%
+  group_by(amc, Medical_History) %>%
+  summarise(Count = sum(Presence, na.rm = TRUE)) %>%
+  ggplot(aes(x = factor(amc, labels = c("LV", "LVOT/Aortic Root")), y = Count, fill = Medical_History)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Medical History Counts by AMC Type", x = "AMC Type", y = "Count") +
+  theme_minimal()
 
+# Boxplot of EtCO2 by AMC and Medical History
+ggplot(cardiac_data, aes(x = factor(amc, labels = c("LV", "LVOT/Aortic Root")), y = etco2, fill = factor(hist1))) +
+  geom_boxplot() +
+  labs(title = "EtCO2 by AMC and History of Coronary Artery Disease (hist1)",
+       x = "AMC Type",
+       y = "EtCO2",
+       fill = "History of CAD (hist1)") +
+  theme_minimal()
+```
+
+### ANOVA
+```{r}
+# Linear model with interactions
+interaction_model <- lm(etco2 ~ amc * (hist1 + hist2 + hist3 + hist4 + hist5), data = cardiac_data)
+
+# Summary of the model
+summary(interaction_model)
+
+# ANOVA to test interaction significance
+anova(interaction_model)
+
+# Check the residuals for model assumptions
+par(mfrow = c(2, 2))  # Display diagnostic plots
+plot(interaction_model)
 ```
 
 ## Introduction
 
 Scientific Question: Does the relationship between EtCO2 and AMC behave differently in the presence
 of relevant medical history? 
+
 Clinical relevance:
 
 ## Methods
