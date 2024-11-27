@@ -38,7 +38,10 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 
-data[data == 9999] <- NA
+#data[data == 9999] <- NA # comparison (==) is possible only for atomic and list types, our data is tibble
+
+data <- data %>%
+  mutate(across(where(is.numeric), ~ replace(.x, .x == 9999, NA)))
 
 data$race <- factor(data$race, levels = c(1, 2, 3, 4, 99), 
                     labels = c("White", "Black/African American", 
@@ -173,12 +176,10 @@ ggplot(cleaned_data, aes(x = etco2, color = hist2)) +
 
 ## check assumptions, anova, homeostatisicty, bivariate 
 
-### lm - ANOVA/lm 
-```{r}
-# Fit a linear regression model
-normal_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + hist4 + hist5, 
-                   data = cleaned_data)
+### Assumption checking of ANOVA 
 
+### summary of first lm model - ANOVA/lm 
+```{r}
 # Summary of the linear model
 summary(normal_model)
 
@@ -186,7 +187,6 @@ summary(normal_model)
 par(mfrow = c(2, 2)) # Layout for multiple diagnostic plots
 plot(normal_model)
 par(mfrow = c(1, 1)) # Reset layout
-
 ```
 
 ```{r}
@@ -196,6 +196,16 @@ interaction_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 +
                           amc:hist4 + amc:hist5, 
                         data = cleaned_data)
 
+plot(interaction_model, which = 1)
+
+library(lmtest)
+dwtest(interaction_model)
+
+plot(interaction_model, which = 2)
+
+library(car)
+vif(interaction_model)
+
 # Summary of the interaction model
 summary(interaction_model)
 
@@ -203,52 +213,6 @@ summary(interaction_model)
 par(mfrow = c(2, 2)) # Layout for multiple diagnostic plots
 plot(interaction_model)
 par(mfrow = c(1, 1)) # Reset layout
-```
-
-colinearity 
-```{r}
-# Load necessary library
-library(car)
-
-# Check Variance Inflation Factor (VIF) for the normal model
-vif(normal_model)
-
-# Check VIF for the interaction model
-vif(interaction_model)
-
-# Drop variables with high VIF iteratively, or center/scale predictors
-# Example: If hist1 has a high VIF, remove it
-reduced_model <- lm(etco2 ~ amc + hist2 + hist3 + hist4 + hist5 + 
-                    amc:hist2 + amc:hist3 + amc:hist4 + amc:hist5, 
-                    data = cleaned_data)
-
-# Check VIF again for the reduced model
-vif(reduced_model)
-
-```
-
-```{r}
-# Use stepwise selection based on AIC
-step_model_aic <- step(normal_model, 
-                       scope = list(lower = ~1, upper = interaction_model), 
-                       direction = "both", 
-                       k = 2) # k = 2 for AIC
-
-# Use stepwise selection based on BIC
-step_model_bic <- step(normal_model, 
-                       scope = list(lower = ~1, upper = interaction_model), 
-                       direction = "both", 
-                       k = log(nrow(cleaned_data))) # k = log(n) for BIC
-
-# Compare models using AIC and BIC
-aic_values <- c(AIC(normal_model), AIC(interaction_model), AIC(step_model_aic))
-bic_values <- c(BIC(normal_model), BIC(interaction_model), BIC(step_model_bic))
-
-model_comparison <- data.frame(Model = c("Normal Model", "Interaction Model", "Stepwise AIC Model"),
-                                AIC = aic_values,
-                                BIC = bic_values)
-print(model_comparison)
-
 ```
 
 ## Introduction
@@ -280,8 +244,12 @@ symptoms.
 
 ## Methods
 
-Design of Study: Data Set Details: Cohort: Chosen Analysis Methodology:
-Rationale:
+Design of Study: 
+Data Set Details: 
+Cohort: 
+
+Chosen Analysis Methodology: lgm 
+Rationale: We cannot assume a linear relationship with medical history 
 
 ## Results
 
