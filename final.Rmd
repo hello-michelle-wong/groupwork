@@ -75,7 +75,7 @@ library(ggplot2)
 library(tidyr)
 
 data <- data %>%
-  mutate(across(where(is.numeric), ~ replace(.x, .x == 9999, NA)))
+  mutate(across(where(is.numeric), ~ replace(.x, .x == 9999, NA))) 
 
 data$race <- factor(data$race, levels = c(1, 2, 3, 4, 99), 
                     labels = c("White", "Black/African American", 
