@@ -22,22 +22,64 @@ data <- na.omit(data)
 
 ```{r}
 library(ggplot2)
-
-ggplot(data, aes(x=as.factor(amc), y=etco2, fill=as.factor(hist1)))+
-  geom_boxplot()+
-    scale_color_manual(
-    values = c("purple", "blue"),  # Set custom colors for the levels
-    labels = c("No", "Yes")  # Custom legend labels
-  )+
-  labs(x="AMC", y="etco2", fill="History of Coronary Artery Disease")
-
-
 ```
+
 ```{r}
-ggplot(data, aes(x = as.factor(amc), y = etco2)) +  
+ggplot(data, aes(x = as.factor(amc), y = etco2, fill = as.factor(hist1))) +
   geom_boxplot() +
-  labs(x = "Number of Cylinders", y = "Miles per Gallon") +
+  labs(x = "AMC", y = "etco2", fill = "History of coronary artery disease") +
+  scale_fill_manual(
+    values = c("lightblue", "salmon"), 
+    labels = c("No", "Yes")  # Change legend labels from 0/1 to "No"/"Yes"
+  ) +
   theme_minimal()
+```
+
+```{r}
+ggplot(data, aes(x = as.factor(amc), y = etco2, fill = as.factor(hist2))) +
+  geom_boxplot() +
+  labs(x = "AMC", y = "etco2", fill = "History of congestive heart failure") +
+  scale_fill_manual(
+    values = c("lightblue", "salmon"), 
+    labels = c("No", "Yes")  # Change legend labels from 0/1 to "No"/"Yes"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(data, aes(x = as.factor(amc), y = etco2, fill = as.factor(hist3))) +
+  geom_boxplot() +
+  labs(x = "AMC", y = "etco2", fill = "History of chronic kidney disease") +
+  scale_fill_manual(
+    values = c("lightblue", "salmon"), 
+    labels = c("No", "Yes")  # Change legend labels from 0/1 to "No"/"Yes"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(data, aes(x = as.factor(amc), y = etco2, fill = as.factor(hist4))) +
+  geom_boxplot() +
+  labs(x = "AMC", y = "etco2", fill = "History of diabetes mellitus") +
+  scale_fill_manual(
+    values = c("lightblue", "salmon"), 
+    labels = c("No", "Yes")  # Change legend labels from 0/1 to "No"/"Yes"
+  ) +
+  theme_minimal()
+```
+
+
+
+```{r}
+ggplot(data, aes(x = as.factor(amc), y = etco2, fill = as.factor(hist5))) +
+  geom_boxplot() +
+  labs(x = "AMC", y = "etco2", fill = "History of Myocardial Infarction") +
+  scale_fill_manual(
+    values = c("lightblue", "salmon"),  # Optional: Customize colors
+    labels = c("No", "Yes")  # Change legend labels from 0/1 to "No"/"Yes"
+  ) +
+  theme_minimal()
+
 ```
 
 
