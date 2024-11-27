@@ -137,6 +137,6 @@ h5
 
 ```{r}
 library(gridExtra)
-
 grid.arrange(h1, h2, h3, h4, h5, ncol = 2)
+
 ```
