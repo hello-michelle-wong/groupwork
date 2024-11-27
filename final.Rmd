@@ -64,7 +64,7 @@ Rationale: We assume a linear relationship with medical history
 ```{r}
 library(readxl)
 data <- read_excel("cardiac_arrests.xlsx")
-head(data)
+#head(data)
 ```
 
 ### Cleaning
@@ -111,10 +111,8 @@ data$survival <- factor(data$survival, levels = c(0, 1),
 data$time_approx <- factor(data$time_approx, levels = c(0, 1), 
                            labels = c("Known", "Approximated"))
 
-summary(data)
-sum(is.na(data))
+#summary(data)
 cleaned_data <- na.omit(data)
-sum(is.na(cleaned_data))
 ```
 
 ### Assumptions Made: 
@@ -166,6 +164,6 @@ Exploratory/Descriptive Analysis: Main Statistical Analysis:
 
 Main Findings: Answer Scientific Question: Limitations:
 
-##References
+## References
 
 Citations References

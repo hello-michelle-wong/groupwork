@@ -2790,43 +2790,8 @@ symptoms.</p>
 <p>Design of Study: Data Set Details: Cohort:</p>
 <p>Chosen Analysis Methodology: lm Rationale: We assume a linear
 relationship with medical history</p>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["pat_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sex"],"name":[3],"type":["chr"],"align":["left"]},{"label":["race"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["amc"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["op_level"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["cpr_type"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["hist1"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["hist2"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["hist3"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["hist4"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["hist5"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["etco2"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["rosc"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["survival"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["time_approx"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["time_to_determination"],"name":[17],"type":["dbl"],"align":["right"]}],"data":[{"1":"1001-1","2":"36","3":"Male","4":"4","5":"1","6":"2","7":"1","8":"0","9":"0","10":"0","11":"0","12":"0","13":"20","14":"1","15":"0","16":"0","17":"9"},{"1":"1001-10","2":"66","3":"Male","4":"1","5":"2","6":"3","7":"2","8":"1","9":"1","10":"0","11":"1","12":"0","13":"8","14":"0","15":"0","16":"0","17":"19"},{"1":"1001-100","2":"64","3":"Female","4":"1","5":"1","6":"1","7":"1","8":"1","9":"1","10":"1","11":"1","12":"9999","13":"11","14":"0","15":"0","16":"1","17":"8"},{"1":"1001-101","2":"57","3":"Male","4":"2","5":"1","6":"1","7":"2","8":"0","9":"0","10":"0","11":"0","12":"0","13":"10","14":"0","15":"0","16":"0","17":"0"},{"1":"1001-102","2":"65","3":"Female","4":"1","5":"1","6":"1","7":"1","8":"0","9":"0","10":"0","11":"1","12":"0","13":"30","14":"1","15":"1","16":"0","17":"6"},{"1":"1001-103","2":"84","3":"Male","4":"2","5":"1","6":"1","7":"2","8":"1","9":"1","10":"1","11":"1","12":"0","13":"21","14":"0","15":"0","16":"0","17":"15"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
 <div id="cleaning" class="section level3">
 <h3>Cleaning</h3>
-<pre><code>##     pat_id               age            sex           
-##  Length:129         Min.   : 7.00   Length:129        
-##  Class :character   1st Qu.:56.00   Class :character  
-##  Mode  :character   Median :67.00   Mode  :character  
-##                     Mean   :64.08                     
-##                     3rd Qu.:75.00                     
-##                     Max.   :93.00                     
-##                      race                  amc                    op_level  
-##  White                 :51   LV              :79   Attending physician:101  
-##  Black/African American:27   LVOT/Aortic root:50   Fellow             : 15  
-##  Asian                 : 9                         Resident           : 11  
-##  Latinx                :26                         Other              :  0  
-##  Other                 : 8                         NA&#39;s               :  2  
-##  NA&#39;s                  : 8                                                  
-##         cpr_type   hist1     hist2      hist3     hist4     hist5    
-##  Manual     :78   No  :96   No  :106   No  :99   No  :74   No  :119  
-##  Mechanical :36   Yes :31   Yes : 20   Yes :26   Yes :52   Yes :  7  
-##  Alternating:12   NA&#39;s: 2   NA&#39;s:  3   NA&#39;s: 4   NA&#39;s: 3   NA&#39;s:  3  
-##  NA&#39;s       : 3                                                      
-##                                                                      
-##                                                                      
-##      etco2        rosc    survival        time_approx  time_to_determination
-##  Min.   : 6.00   No :62   No :113   Known       :111   Min.   : 0.000       
-##  1st Qu.:11.00   Yes:67   Yes: 16   Approximated: 18   1st Qu.: 5.000       
-##  Median :13.00                                         Median : 8.000       
-##  Mean   :14.35                                         Mean   : 9.837       
-##  3rd Qu.:16.00                                         3rd Qu.:12.000       
-##  Max.   :78.00                                         Max.   :40.000</code></pre>
-<pre><code>## [1] 28</code></pre>
-<pre><code>## [1] 0</code></pre>
 </div>
 <div id="assumptions-made" class="section level3">
 <h3>Assumptions Made:</h3>
@@ -2882,7 +2847,9 @@ value.</p>
 <div id="conclusions" class="section level2">
 <h2>Conclusions</h2>
 <p>Main Findings: Answer Scientific Question: Limitations:</p>
-<p>##References</p>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
 <p>Citations References</p>
 </div>
 
