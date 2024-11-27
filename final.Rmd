@@ -1,0 +1,171 @@
+---
+title: "Final Report"
+author: "Group 5"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: 2
+    number_sections: no
+    theme: cerulean
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+  word_document:
+    toc: no
+  pdf_document:
+    toc: no
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r,echo=FALSE}
+knitr::opts_chunk$set(cache=TRUE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, tidy.opts=list(width.cutoff=60),tidy=TRUE)
+```
+
+## Introduction
+
+### Scientific Question:
+
+Does the relationship between EtCO2 and AMC behave differently in the
+presenceof relevant medical history?
+
+### Clinical relevance:
+
+Observing the relationship between EtCO2 (end-tidal carbon dioxide) and
+AMC (area of maximum compression) is crucial to understanding the
+quality of chest compression during CPR (cardiopulmonary resuscitation),
+a life-saving procedure during cardiac arrests. Chest compressions are
+crucial to reviving a patient or achieving ROSC or Return to Spontaneous
+Circulation, though they requires adequate rate, depth, and location for
+the best results. However, CPR guidelines are not as precise, as
+differences in body size and histories of chronic disease can alter the
+heart's location. When patients have compression in the aortic root,
+there is an obstruction of blood flow from the heart and can limit
+effective perfusion and worsen the prognosis. Compressions over the left
+ventricle or LV can improve the blood circulation and lead to
+higher-quality CPR. This relationship between EtCO2 (where higher levels
+have been shown to correlate with better blood flow from past studies)
+and AMC may differ dependent on a patient's history, as these conditions
+can impact the ventilation-perfusion mismatch or other presenting
+symptoms.
+
+## Methods
+
+Design of Study: 
+Data Set Details: 
+Cohort: 
+
+Chosen Analysis Methodology: lm
+Rationale: We assume a linear relationship with medical history 
+
+```{r}
+library(readxl)
+data <- read_excel("cardiac_arrests.xlsx")
+head(data)
+```
+
+### Cleaning
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+data <- data %>%
+  mutate(across(where(is.numeric), ~ replace(.x, .x == 9999, NA)))
+
+data$race <- factor(data$race, levels = c(1, 2, 3, 4, 99), 
+                    labels = c("White", "Black/African American", 
+                               "Asian", "Latinx", "Other"))
+data$amc <- factor(data$amc, levels = c(1, 2), 
+                   labels = c("LV", "LVOT/Aortic root"))
+data$op_level <- factor(data$op_level, levels = c(1, 2, 3, 99), 
+                        labels = c("Attending physician", "Fellow", 
+                                   "Resident", "Other"))
+data$cpr_type <- factor(data$cpr_type, levels = c(1, 2, 3), 
+                        labels = c("Manual", "Mechanical", "Alternating"))
+data$hist1 <- factor(data$hist1, levels = c(0, 1), 
+                     labels = c("No", "Yes"))
+
+data$hist2 <- factor(data$hist2, levels = c(0, 1), 
+                     labels = c("No", "Yes"))
+
+data$hist3 <- factor(data$hist3, levels = c(0, 1), 
+                     labels = c("No", "Yes"))
+
+data$hist4 <- factor(data$hist4, levels = c(0, 1), 
+                     labels = c("No", "Yes"))
+
+data$hist5 <- factor(data$hist5, levels = c(0, 1), 
+                     labels = c("No", "Yes"))
+
+data$rosc <- factor(data$rosc, levels = c(0, 1), 
+                    labels = c("No", "Yes"))
+
+data$survival <- factor(data$survival, levels = c(0, 1), 
+                        labels = c("No", "Yes"))
+
+data$time_approx <- factor(data$time_approx, levels = c(0, 1), 
+                           labels = c("Known", "Approximated"))
+
+summary(data)
+sum(is.na(data))
+cleaned_data <- na.omit(data)
+sum(is.na(cleaned_data))
+```
+
+### Assumptions Made: 
+
+```{r}
+# Fit a linear regression model
+normal_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + 
+                          hist4 + hist5 + amc:hist1 + amc:hist2 + amc:hist3 + 
+                          amc:hist4 + amc:hist5, 
+                        data = cleaned_data)
+```
+
+1. Linearity and Homoscedasticity (Constant Variance)
+The relationship between the predictor(s) (independent variables) and the outcome (dependent variable) should be linear. This means that changes in the predictor(s) should produce proportional changes in the outcome.For homoscedasticity, the variance of the residuals (errors) should be constant across all levels of the independent variables.
+```{r}
+plot(normal_model, which = 1)
+```
+
+2. Independence: The residuals (errors) from the model should be independent. This means that the error associated with one observation is not correlated with the error of another observation. A value close to 2 indicates no autocorrelation.
+```{r}
+library(lmtest)
+dwtest(normal_model)
+```
+
+3. Normality of Residuals: The residuals should be normally distributed.
+```{r}
+plot(normal_model, which = 2)
+```
+
+4. No Perfect Multicollinearity: The independent variables should not be highly correlated with each other. If they are, it becomes difficult to isolate the individual effects of each predictor. In ANOVA, this is typically not an issue if the independent variables are categorical (factors), but in multiple regression, it could be.
+
+VIF < 5: Acceptable (low multicollinearity).
+VIF between 5 and 10: Moderate multicollinearity, may warrant investigation.
+VIF > 10: Problematic (high multicollinearity), often considered a "bad" value.
+
+```{r}
+library(car)
+vif(normal_model, 'predictor')
+vif(normal_model)
+```
+
+## Results
+
+Tables Figures Statistics
+
+Exploratory/Descriptive Analysis: Main Statistical Analysis:
+
+## Conclusions
+
+Main Findings: Answer Scientific Question: Limitations:
+
+##References
+
+Citations References
