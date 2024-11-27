@@ -114,8 +114,12 @@ symptoms.
 
 ## Methods
 
-Design of Study: Data Set Details: Cohort: Chosen Analysis Methodology:
-Rationale:
+Design of Study: 
+Data Set Details: 
+Cohort: 
+
+Chosen Analysis Methodology: lgm 
+Rationale: We cannot assume a linear relationship with medical history 
 
 ## Results
 
