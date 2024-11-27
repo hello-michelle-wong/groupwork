@@ -163,6 +163,8 @@ Exploratory/Descriptive Analysis: Main Statistical Analysis:
 The p-value (0.5541) for the F-test is larger than the typical significance threshold of 0.05, meaning the addition of the interaction terms (amc:hist1 and amc:hist3) does not significantly improve the model.
 The RSS difference between the two models is relatively small (63.984), suggesting that the interactions do not provide a substantial increase in explanatory power.
 
+However. the Residual sum of squares (RSS) which measures the total deviation of the predicted values from the actual values, is lower for Model 2 (5224.8) compared to Model 1 (5288.8), indicating a marginal improvement in fit when the interaction terms are included.
+
 ```{r}
 reduced_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + hist4 + hist5, data = cleaned_data)
 
