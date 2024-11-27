@@ -65,7 +65,7 @@ sum(is.na(cleaned_data))
 ```
 
 ```{r}
-interaction_model <- glm(amc ~ etco2 * hist1 + etco2 * hist2 + etco2 * hist3 + 
+interaction_model <- glm(amc ~ etco2 + etco2 * hist1 + etco2 * hist2 + etco2 * hist3 + 
                          etco2 * hist4 + etco2 * hist5, 
                          data = cleaned_data, family = binomial)
 
@@ -103,7 +103,7 @@ h2
 h3 <- ggplot(cleaned_data, aes(x = etco2, color = hist3)) +
   geom_density() +
   facet_wrap(~ amc) +
-  labs(title = "Relationship between EtCO2 and AMC by ",
+  labs(title = "Relationship between EtCO2 and AMC by History of chronic kidney disease",
        x = "EtCO2 (mmHg)", y = "Density") +
   theme_minimal()
 
@@ -115,7 +115,7 @@ h3
 h4 <- ggplot(cleaned_data, aes(x = etco2, color = hist4)) +
   geom_density() +
   facet_wrap(~ amc) +
-  labs(title = "Relationship between EtCO2 and AMC by ",
+  labs(title = "Relationship between EtCO2 and AMC by History of diabetes mellitus",
        x = "EtCO2 (mmHg)", y = "Density") +
   theme_minimal()
 
@@ -127,7 +127,7 @@ h4
 h5 <- ggplot(cleaned_data, aes(x = etco2, color = hist2)) +
   geom_density() +
   facet_wrap(~ amc) +
-  labs(title = "Relationship between EtCO2 and AMC",
+  labs(title = "Relationship between EtCO2 and AMC History of myocardial infarction",
        x = "EtCO2 (mmHg)", y = "Density") +
   theme_minimal()
 
@@ -140,3 +140,4 @@ library(gridExtra)
 grid.arrange(h1, h2, h3, h4, h5, ncol = 2)
 
 ```
+

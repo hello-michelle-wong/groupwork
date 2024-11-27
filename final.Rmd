@@ -75,7 +75,7 @@ library(ggplot2)
 library(tidyr)
 
 data <- data %>%
-  mutate(across(where(is.numeric), ~ replace(.x, .x == 9999, NA)))
+  mutate(across(where(is.numeric), ~ replace(.x, .x == 9999, NA))) 
 
 data$race <- factor(data$race, levels = c(1, 2, 3, 4, 99), 
                     labels = c("White", "Black/African American", 
@@ -118,11 +118,15 @@ cleaned_data <- na.omit(data)
 ### Assumptions Made: 
 
 ```{r}
-# Fit a linear regression model
+# Fit a linear regression model 
+
+# look into why it's 1 vs 2 
 normal_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + 
                           hist4 + hist5 + amc:hist1 + amc:hist2 + amc:hist3 + 
                           amc:hist4 + amc:hist5, 
                         data = cleaned_data)
+
+summary(normal_model)
 ```
 
 1. Linearity and Homoscedasticity (Constant Variance)
@@ -175,6 +179,18 @@ new_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 +
 # Compare models, talk about clinical signficiance as why 
 anova(reduced_model, new_model)
 ```
+
+```{r}
+reduced_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + hist4 + hist5, data = cleaned_data)
+
+new_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + 
+                          hist4 + hist5 + amc:hist1 + amc:hist3, 
+                        data = cleaned_data)
+
+# Compare models, talk about clinical signficiance as why 
+anova(reduced_model, new_model)
+```
+
 
 ## Conclusions
 
