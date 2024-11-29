@@ -3,10 +3,6 @@ title: "Final Report"
 author: "Group 5"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
-  pdf_document:
-    toc: no
-  word_document:
-    toc: no
   html_document:
     df_print: paged
     toc: yes
@@ -16,6 +12,10 @@ output:
     toc_float:
       collapsed: yes
       smooth_scroll: yes
+  word_document:
+    toc: no
+  pdf_document:
+    toc: no
 editor_options: 
   markdown: 
     wrap: 72
@@ -30,7 +30,7 @@ knitr::opts_chunk$set(cache=TRUE, echo=FALSE, error=FALSE, message=FALSE, warnin
 ### Scientific Question:
 
 Does the relationship between EtCO2 and AMC behave differently in the
-presenceof relevant medical history?
+presence of relevant medical history?
 
 ### Clinical relevance:
 
@@ -54,12 +54,115 @@ symptoms.
 
 ## Methods
 
-Design of Study: 
-Data Set Details: 
-Cohort: 
+### Design of Study:
 
-Chosen Analysis Methodology: lm
-Rationale: We assume a linear relationship with medical history 
+The metabolic syndrome and cognitive function study is a retrospective
+observational analysis which focuses on investigating the relationship
+between EtCO2 and the AMC during CPR and whether this relationship is
+affected by the presence of relevant medical histories of patients.
+
+This study focuses on 2 primary areas of compression, the left ventricle
+(LV) and the left ventricle outflow tract (LVOT)/aortic root, and how
+compression over these AMCs impact EtCO2 levels and whether this impact
+changes by the CPR patients' pre existing medical conditions, such as
+coronary artery disease, congestive hearth failure, chronic kidney
+disease, diabetes mellitus and myocardial infarction.
+
+### Data set Details:
+
+The data set consists of 129 cases of in-hospital cardiac arrests where
+transesophageal echocardiography (TEE) imaging was employed during CPR.
+This advanced imaging technique is used to identify the specific area of
+the chest targeted for compression to precisely classify the AMC - LV or
+LVOT.
+
+Key variables in the data set include:
+
+-   Dependent Variable:
+
+    -   EtCO2: Measured during CPR, represents levels of exhaled CO2 and
+        serves as a proxy for cardiac output.
+
+-   Independent Variables:
+
+    -   AMC: Areas of compression, classified as either LV or LVOT.
+
+    -   Medical History: Binary indicators for conditions like coronary
+        artery diseas (hist1), congestive hearth failure (hist2),
+        chronic kidney disease (hist3), diabetes mellitus (hist4), and
+        myocardial infarction (hist5).
+
+-   Covariates:
+
+    -   Demographics like race and gender.
+
+    -   TEE operator experience level (e.g. attending physicain,
+        resident, etc.).
+
+    -   Type of CPR performed (manual, mechanical, alternating).
+
+    -   Timing of cardiac arrest (known or approximated).
+
+First, the data set underwent pre-processing and cleaning, which
+included the removal of invalid data entries. The next step involved
+converting the numeric values flagged as outliers (e.g. placeholder
+values like 9999) to missing (NA) values and excluding them from the
+analysis.
+
+### Cohort:
+
+The study cohort consisted of adult patients who had experienced
+in-hospital cardiac arrest and received CPR where TEE was used. The
+inclusion criteria required proper TEE imaging data to identify the
+precise location of AMC and valid measurements of EtCO2 levels. patients
+with any significant missing data were excluded. After pre-processing
+and cleaning, the data set included 106 valid observations (patients)
+for further analysis.
+
+### Analysis Methodology:
+
+A multivariable linear model was implemented to analyse the relationship
+between EtCO2 level and AMC. Interaction terms between AMC the the
+medical history variables were used in this model to asses whether the
+relationship between EtCO2 and AMC varied by the presence of 5 specific
+pre-existing medical conditions.
+
+The analysis included two models:
+
+-   A reduced model, which included only the main effects of AMC and
+    medical history.
+
+-   A full model, which included interaction terms to evaluate whether
+    medical history affected the relationship between EtCO2 and AMC.
+
+An Analysis of Variance (ANOVA) test was used to compare these models
+and evaluate the contribution of the interaction terms to model fit.
+
+### Rationale:
+
+A linear regression model was implemented based on the assumption that
+the relationship between EtCO2 and AMC is linear, as CO2 levels in the
+blood reflect cardiac output which is influnced by the area of
+compression (LV or LVOT). We assume higher EtCO2 levels when the AMC is
+LV. This specif approach allows for testing the main effects while
+including interaction terms to study more complex relationships. The
+inclusion of these interaction terms is very crucial for identifying
+whether specif medical histories alter the impact of AMC on EtCO2.
+
+Assumptions include:
+
+-   Linearity and Homoscedasticity: Checked via residual plots.
+
+-   Independence: Verified using the Durbin-Watson test.
+
+-   Normality of Residuals: Assessed through Q-Q plots.
+
+-   Multicollinearity: Evaluated using Variance Inflation Factors (VIF),
+    with all predictors having suitable values (\< 5).
+
+This methodological approach addresses potential confounding factors and
+statistical validity while guaranteeing a thorough investigation of the
+research question.
 
 ```{r}
 library(readxl)
@@ -115,7 +218,7 @@ data$time_approx <- factor(data$time_approx, levels = c(0, 1),
 cleaned_data <- na.omit(data)
 ```
 
-### Assumptions Made: 
+### Assumptions Made:
 
 ```{r}
 # Fit a linear regression model 
@@ -129,28 +232,43 @@ normal_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 +
 summary(normal_model)
 ```
 
-1. Linearity and Homoscedasticity (Constant Variance)
-The relationship between the predictor(s) (independent variables) and the outcome (dependent variable) should be linear. This means that changes in the predictor(s) should produce proportional changes in the outcome.For homoscedasticity, the variance of the residuals (errors) should be constant across all levels of the independent variables.
+1.  Linearity and Homoscedasticity (Constant Variance) The relationship
+    between the predictor(s) (independent variables) and the outcome
+    (dependent variable) should be linear. This means that changes in
+    the predictor(s) should produce proportional changes in the
+    outcome.For homoscedasticity, the variance of the residuals (errors)
+    should be constant across all levels of the independent variables.
+
 ```{r}
 plot(normal_model, which = 1)
 ```
 
-2. Independence: The residuals (errors) from the model should be independent. This means that the error associated with one observation is not correlated with the error of another observation. A value close to 2 indicates no autocorrelation.
+2.  Independence: The residuals (errors) from the model should be
+    independent. This means that the error associated with one
+    observation is not correlated with the error of another observation.
+    A value close to 2 indicates no autocorrelation.
+
 ```{r}
 library(lmtest)
 dwtest(normal_model)
 ```
 
-3. Normality of Residuals: The residuals should be normally distributed.
+3.  Normality of Residuals: The residuals should be normally
+    distributed.
+
 ```{r}
 plot(normal_model, which = 2)
 ```
 
-4. No Perfect Multicollinearity: The independent variables should not be highly correlated with each other. If they are, it becomes difficult to isolate the individual effects of each predictor. In ANOVA, this is typically not an issue if the independent variables are categorical (factors), but in multiple regression, it could be.
+4.  No Perfect Multicollinearity: The independent variables should not
+    be highly correlated with each other. If they are, it becomes
+    difficult to isolate the individual effects of each predictor. In
+    ANOVA, this is typically not an issue if the independent variables
+    are categorical (factors), but in multiple regression, it could be.
 
-VIF < 5: Acceptable (low multicollinearity).
-VIF between 5 and 10: Moderate multicollinearity, may warrant investigation.
-VIF > 10: Problematic (high multicollinearity), often considered a "bad" value.
+VIF \< 5: Acceptable (low multicollinearity). VIF between 5 and 10:
+Moderate multicollinearity, may warrant investigation. VIF \> 10:
+Problematic (high multicollinearity), often considered a "bad" value.
 
 ```{r}
 library(car)
@@ -164,21 +282,17 @@ Tables Figures Statistics
 
 Exploratory/Descriptive Analysis: Main Statistical Analysis:
 
-The p-value (0.5541) for the F-test is larger than the typical significance threshold of 0.05, meaning the addition of the interaction terms (amc:hist1 and amc:hist3) does not significantly improve the model.
-The RSS difference between the two models is relatively small (63.984), suggesting that the interactions do not provide a substantial increase in explanatory power.
+The p-value (0.5541) for the F-test is larger than the typical
+significance threshold of 0.05, meaning the addition of the interaction
+terms (amc:hist1 and amc:hist3) does not significantly improve the
+model. The RSS difference between the two models is relatively small
+(63.984), suggesting that the interactions do not provide a substantial
+increase in explanatory power.
 
-However. the Residual sum of squares (RSS) which measures the total deviation of the predicted values from the actual values, is lower for Model 2 (5224.8) compared to Model 1 (5288.8), indicating a marginal improvement in fit when the interaction terms are included.
-
-```{r}
-reduced_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + hist4 + hist5, data = cleaned_data)
-
-new_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + 
-                          hist4 + hist5 + amc:hist1 + amc:hist3, 
-                        data = cleaned_data)
-
-# Compare models, talk about clinical signficiance as why 
-anova(reduced_model, new_model)
-```
+However. the Residual sum of squares (RSS) which measures the total
+deviation of the predicted values from the actual values, is lower for
+Model 2 (5224.8) compared to Model 1 (5288.8), indicating a marginal
+improvement in fit when the interaction terms are included.
 
 ```{r}
 reduced_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + hist4 + hist5, data = cleaned_data)
@@ -191,6 +305,16 @@ new_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 +
 anova(reduced_model, new_model)
 ```
 
+```{r}
+reduced_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + hist4 + hist5, data = cleaned_data)
+
+new_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + 
+                          hist4 + hist5 + amc:hist1 + amc:hist3, 
+                        data = cleaned_data)
+
+# Compare models, talk about clinical signficiance as why 
+anova(reduced_model, new_model)
+```
 
 ## Conclusions
 
