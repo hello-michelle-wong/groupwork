@@ -3,6 +3,10 @@ title: "Final Report"
 author: "Group 5"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
+  pdf_document:
+    toc: no
+  word_document:
+    toc: no
   html_document:
     df_print: paged
     toc: yes
@@ -12,10 +16,6 @@ output:
     toc_float:
       collapsed: yes
       smooth_scroll: yes
-  word_document:
-    toc: no
-  pdf_document:
-    toc: no
 editor_options: 
   markdown: 
     wrap: 72
