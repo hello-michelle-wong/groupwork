@@ -302,6 +302,16 @@ favstats(cleaned_data$etco2[cleaned_data$amc=="LVOT/Aortic root"])
 ```
 
 ```{r}
+ggplot(cleaned_data, aes(x = etco2, fill = amc)) +
+  geom_density(alpha = 0.5) + 
+  labs(x = "EtCO2", y = "Density", fill = "AMC")
+
+```
+
+Now let's look at how history of disease affects this relationships:
+
+
+```{r}
 library(gridExtra)
 
 plots <- lapply(c("hist1", "hist2", "hist3", "hist4", "hist5"), function(hist_var) {
@@ -318,7 +328,13 @@ plots <- lapply(c("hist1", "hist2", "hist3", "hist4", "hist5"), function(hist_va
 grid.arrange(grobs = plots, ncol = 3)
 ```
 
+```{r}
+ggplot(cleaned_data, aes(x = etco2, fill = amc)) +
+  geom_density(alpha = 0.5) +
+  facet_wrap(~ hist1) +
+  labs(title = "Density of EtCO2 Colored by AMC", subtitle = " Wrapped by History of *insert hist*", fill = "AMC", x = "EtCO2 (mmHg)", y = "Density")
 
+```
 ### Exploratory/Descriptive Analysis: Main Statistical Analysis:
 
 The p-value (0.5541) for the F-test is larger than the typical
