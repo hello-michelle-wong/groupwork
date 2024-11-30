@@ -1,6 +1,6 @@
 ---
 title: "Final Report"
-author: "Group 5"
+author: "Group 5: Megan Lui, Michelle Wong, Yael Yossefy, Dirgh Shah"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
   html_document:
