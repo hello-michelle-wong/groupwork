@@ -274,6 +274,7 @@ vif(normal_model)
 
 ### Early linear Regression Model with all possible interaction terms:
 
+Since the assumptions hold, we are able to use a linear regression model to examine the relationships between our variables. 
 ```{r}
 summary(normal_model)
 ```
@@ -313,7 +314,6 @@ ggplot(cleaned_data, aes(x = etco2, fill = amc)) +
 
 Now let's look at how history of disease affects this relationships:
 
-
 ```{r}
 library(gridExtra)
 
@@ -338,6 +338,7 @@ ggplot(cleaned_data, aes(x = etco2, fill = amc)) +
   labs(title = "Density of EtCO2 Colored by AMC", subtitle = " Wrapped by History of *insert hist*", fill = "AMC", x = "EtCO2 (mmHg)", y = "Density")
 
 ```
+
 ### Exploratory/Descriptive Analysis: Main Statistical Analysis:
 
 The p-value (0.5541) for the F-test is larger than the typical
