@@ -2894,40 +2894,6 @@ the research question.</p>
 <div id="cleaning" class="section level3">
 <h3>Cleaning</h3>
 </div>
-<div id="early-linear-regression-model-with-all-possible-interaction-terms" class="section level3">
-<h3>Early linear Regression Model with all possible interaction
-terms:</h3>
-<pre><code>## 
-## Call:
-## lm(formula = etco2 ~ amc + hist1 + hist2 + hist3 + hist4 + hist5 + 
-##     amc:hist1 + amc:hist2 + amc:hist3 + amc:hist4 + amc:hist5, 
-##     data = cleaned_data)
-## 
-## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -8.621 -2.619 -0.931  1.370 61.379 
-## 
-## Coefficients:
-##                              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)                   16.6214     1.1944  13.916   &lt;2e-16 ***
-## amcLVOT/Aortic root           -4.2908     2.0445  -2.099   0.0385 *  
-## hist1Yes                       1.2787     3.5284   0.362   0.7179    
-## hist2Yes                      -2.4692     3.1609  -0.781   0.4367    
-## hist3Yes                      -1.5898     3.0474  -0.522   0.6031    
-## hist4Yes                      -1.4986     2.0872  -0.718   0.4745    
-## hist5Yes                       2.8772     7.6651   0.375   0.7082    
-## amcLVOT/Aortic root:hist1Yes  -2.9982     4.5376  -0.661   0.5104    
-## amcLVOT/Aortic root:hist2Yes   2.7653     5.1711   0.535   0.5941    
-## amcLVOT/Aortic root:hist3Yes   3.2874     4.4888   0.732   0.4658    
-## amcLVOT/Aortic root:hist4Yes   1.1099     3.6059   0.308   0.7589    
-## amcLVOT/Aortic root:hist5Yes  -0.6706     9.0707  -0.074   0.9412    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 7.439 on 94 degrees of freedom
-## Multiple R-squared:  0.08144,    Adjusted R-squared:  -0.02605 
-## F-statistic: 0.7576 on 11 and 94 DF,  p-value: 0.6807</code></pre>
-</div>
 <div id="assumptions-made" class="section level3">
 <h3>Assumptions Made:</h3>
 <ol style="list-style-type: decimal">
@@ -2980,6 +2946,40 @@ low multicollinearity.</p>
 ##  1.898921  3.650137  2.193650  2.616744  1.960386  4.086208  3.959051  2.301842 
 ## amc:hist3 amc:hist4 amc:hist5 
 ##  3.297204  3.510846  4.333708</code></pre>
+</div>
+<div id="early-linear-regression-model-with-all-possible-interaction-terms" class="section level3">
+<h3>Early linear Regression Model with all possible interaction
+terms:</h3>
+<pre><code>## 
+## Call:
+## lm(formula = etco2 ~ amc + hist1 + hist2 + hist3 + hist4 + hist5 + 
+##     amc:hist1 + amc:hist2 + amc:hist3 + amc:hist4 + amc:hist5, 
+##     data = cleaned_data)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -8.621 -2.619 -0.931  1.370 61.379 
+## 
+## Coefficients:
+##                              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                   16.6214     1.1944  13.916   &lt;2e-16 ***
+## amcLVOT/Aortic root           -4.2908     2.0445  -2.099   0.0385 *  
+## hist1Yes                       1.2787     3.5284   0.362   0.7179    
+## hist2Yes                      -2.4692     3.1609  -0.781   0.4367    
+## hist3Yes                      -1.5898     3.0474  -0.522   0.6031    
+## hist4Yes                      -1.4986     2.0872  -0.718   0.4745    
+## hist5Yes                       2.8772     7.6651   0.375   0.7082    
+## amcLVOT/Aortic root:hist1Yes  -2.9982     4.5376  -0.661   0.5104    
+## amcLVOT/Aortic root:hist2Yes   2.7653     5.1711   0.535   0.5941    
+## amcLVOT/Aortic root:hist3Yes   3.2874     4.4888   0.732   0.4658    
+## amcLVOT/Aortic root:hist4Yes   1.1099     3.6059   0.308   0.7589    
+## amcLVOT/Aortic root:hist5Yes  -0.6706     9.0707  -0.074   0.9412    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 7.439 on 94 degrees of freedom
+## Multiple R-squared:  0.08144,    Adjusted R-squared:  -0.02605 
+## F-statistic: 0.7576 on 11 and 94 DF,  p-value: 0.6807</code></pre>
 </div>
 </div>
 <div id="results" class="section level2">

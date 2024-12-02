@@ -219,21 +219,6 @@ data$time_approx <- factor(data$time_approx, levels = c(0, 1),
 cleaned_data <- na.omit(data)
 ```
 
-### Early linear Regression Model with all possible interaction terms:
-
-```{r}
-# Fit a linear regression model 
-
-# look into why it's 1 vs 2 
-normal_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + 
-                          hist4 + hist5 + amc:hist1 + amc:hist2 + amc:hist3 + 
-                          amc:hist4 + amc:hist5, 
-                        data = cleaned_data)
-
-summary(normal_model)
-```
-
-
 ### Assumptions Made:
 1.  Linearity and Homoscedasticity (Constant Variance) The relationship
     between the predictors and the outcome are linear. This means that changes in
@@ -242,6 +227,11 @@ summary(normal_model)
     should be constant across all levels of the independent variables.
 
 ```{r}
+normal_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + 
+                          hist4 + hist5 + amc:hist1 + amc:hist2 + amc:hist3 + 
+                          amc:hist4 + amc:hist5, 
+                        data = cleaned_data)
+
 plot(normal_model, which = 1)
 ```
 
@@ -280,6 +270,12 @@ We see here in our results that we do not have any values greater than 5, which 
 library(car)
 vif(normal_model, 'predictor')
 vif(normal_model)
+```
+
+### Early linear Regression Model with all possible interaction terms:
+
+```{r}
+summary(normal_model)
 ```
 
 ## Results
