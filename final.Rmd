@@ -144,7 +144,7 @@ A linear regression model was implemented based on the assumption that
 the relationship between EtCO2 and AMC is linear, as CO2 levels in the
 blood reflect cardiac output which is influnced by the area of
 compression (LV or LVOT). We assume higher EtCO2 levels when the AMC is
-LV. This specif approach allows for testing the main effects while
+LV. This specific approach allows for testing the main effects while
 including interaction terms to study more complex relationships. The
 inclusion of these interaction terms is very crucial for identifying
 whether specif medical histories alter the impact of AMC on EtCO2.
@@ -290,6 +290,7 @@ ggplot(cleaned_data, aes(x = amc, y = etco2))+
 ```
 
 ```{r}
+library(mosaic)
 favstats(cleaned_data$etco2[cleaned_data$amc=="LV"])
 favstats(cleaned_data$etco2[cleaned_data$amc=="LVOT/Aortic root"])
 
@@ -370,11 +371,35 @@ new_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 +
 # Compare models, talk about clinical signficiance as why 
 anova(reduced_model, new_model)
 ```
+### Box Plot Insights
+The box plots of EtCO2 by AMC across the different histories illustrate that patients that have compression over the LV have a larger range of EtCO2 values, as the median values around 15-20 mmHg are compare to the median values of those compressed over the LVOT/aortic root at 10-15 mmHg. Across these comorbidities, both the median and IQRs were similar between patients with and without the medical histories. This may suggest that history has a minimal influence on EtCO2 variability.
+
+### Density Plot Observations
+The density plots show that there is a slightly higher concentration of low EtCO2 values (from 5-15 mmHg) in the LVOT/aortic root compared to the LV that has a more even distribution from 10-25 mmHg. For reference, awake and healthy adults normally have a range of 35-45 mmHG of EtCO2. There is no clear shift in these density patterns across the different histories, reinforcing both the statistical findings and box plots that medical history does not significantly affect the EtCO2 levels. Though EtCO2 values are similar between those with and without diseases across both LV and LVOT/aortc root, the proportional density differences in the LVOT/aortic root suggests that perfusion impairments in the area impacts EtCO2 dynamics more than LV. Disease that affect the circulation and gas exchange have a more pronounced effect on the aortic root as well. This leads to higher density proportions at lower EtCO2 value. As the statistical tests show no overall significant effect of disease on EtCo2, these patterns may be due to anatomical sensitivity or local perfusion effects than the impact of history. 
+
+#### Density Plot Observations: Understanding the history and EtCO2 levels
+Patients with certain pre-existing conditions may already have higher EtCO2 values, independent of compressing the amcs. For those with CAD, CHF, lower EtCO2 values are due to the impaired coronary perfusion, impairing the heart's ability to effectively pump blood and clear CO2 from the body. Those with CKD, the disease has a much higher proportion of the same EtCO2 value compared to those wihtout CKD, reflecting potential renal dysfunction and thus electrolyte imbalances. This causes body fluid and perfusion to not work as effectively, causing a higher density of patients to have lower EtCO2. Those with DM also has a higher density proportion and slighlty higher EtCO2 values at the same EtCO2 values without DM, as the vascular changes alteres CO2 handling and perfusion efficinecy. Interestingly, both people with and without MI have higher densities, though those with a history has slightly higher proportion of low EtCO2 levels, as a previous MI causes lasting damages to the heart's ability to effectively pump blood and clear CO2. 
 
 ## Conclusions
+### Main Findings: 
+Investigating the impact of patient history (including coronary artery disease (CAD), congestive heart failure (CHF), chronic kidney disease (CKD), diabetes mellitus (DM), and myocardial infarcation (MCI)) on EtCO2 levels in both the left ventricle and LVOT/aortic root, our findings revealed that there was no statistically significant difference across all groups. Across the multivariable linear model and ANOVA tests, density plots, and box plots, the results were consistent, suggesting that the patient history does not substantially influence EtCO2 levels. 
 
-Main Findings: Answer Scientific Question: Limitations:
 
-## References
+### Clinical Significance
+Our results suggest that EtCO2 levels are not significantly affected by the different histories, though patients with these different chronic disease may have higher EtCO2 values due to already mentioned compensatory mechanisms. Overall, EtCO2 remains a general marker for cardiac output and blood perfusion during CPR, regardless of the patient's history. As compressions over the LV, compared to LVOT/aortic root, lead to better prognosis with slightly higher EtCO2, optimizing the amc or compression location is crucical for maximizing blood flow and prognosis. 
 
-Citations References
+### Limitations and Future Directions
+With approximately 106 valid observations after cleaning the data, the are statistically valid. However, having a larger cohort can provide more representative and generalization insight. In addition, there are some measurement constraints, where EtCO2 was measured during CPR, a highly volatile and unpredictable event. There are many dynamic factors and other confounding factors, such as compression rate, depth, and different ventilation that may introduce some variability that the model does not account for. Future studies in this field can explore how other physiological markers, such as blood pressure or ventilation practices, can examine how real time changes in CPR methodologies influence EtCO2 and prognosis of these patients. 
+
+Overall, though medical history does not statistically influence the relationship between AMC and EtCO2, those with these chronic conditions may show slightly lower or higher EtCO2 values due to its own physiological mechanisms, highlighting the focus on AMC and optimizing the quality of compression during CPR. 
+
+
+## Citations/References
+Baloch K, Rehman Memon A, Ikhlaq U, Umair M, Ansari MI, Abubaker J, Salahuddin N. Assessing the Utility of End-Tidal Carbon Dioxide as a Marker for Fluid Responsiveness in Cardiogenic Shock. Cureus. 2021 Feb 5;13(2):e13164. doi: 10.7759/cureus.13164. PMID: 33692926; PMCID: PMC7938016.
+
+Taghizadieh A, Pouraghaei M, Moharamzadeh P, Ala A, Rahmani F, Basiri Sofiani K. Comparison of end-tidal carbon dioxide and arterial blood bicarbonate levels in patients with metabolic acidosis referred to emergency medicine. J Cardiovasc Thorac Res. 2016;8(3):98-101. doi: 10.15171/jcvtr.2016.21. Epub 2016 Sep 30. PMID: 27777693; PMCID: PMC5075365.
+
+Tepe M, Hakkoymaz H, Kilci Aİ, Gedik MS, Öztürk C, Gökçe MK, Aykan AÇ. Evaluation of the relationship between end-tidal carbon dioxide level and heart failure classification. Rev Assoc Med Bras (1992). 2024 May 20;70(5):e20231499. doi: 10.1590/1806-9282.20231499. PMID: 38775509; PMCID: PMC11110962.
+
+Ölander CH, Vikholm P, Schiller P, Hellgren L. End-Tidal Carbon Dioxide Impacts Brain and Kidney Injury in Experimental Extracorporeal Cardiopulmonary Resuscitation (ECPR). Shock. 2021 Apr 1;55(4):563-569. doi: 10.1097/SHK.0000000000001645. PMID: 32826810.
+
