@@ -166,6 +166,7 @@ research question.
 
 ```{r}
 library(readxl)
+library(mosaic)
 data <- read_excel("cardiac_arrests.xlsx")
 #head(data)
 ```
@@ -218,7 +219,7 @@ data$time_approx <- factor(data$time_approx, levels = c(0, 1),
 cleaned_data <- na.omit(data)
 ```
 
-### Assumptions Made:
+### Early linear Regression Model with all possible interaction terms:
 
 ```{r}
 # Fit a linear regression model 
@@ -232,10 +233,12 @@ normal_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 +
 summary(normal_model)
 ```
 
+
+### Assumptions Made:
 1.  Linearity and Homoscedasticity (Constant Variance) The relationship
     between the predictor(s) (independent variables) and the outcome
-    (dependent variable) should be linear. This means that changes in
-    the predictor(s) should produce proportional changes in the
+    (dependent variable) are linear. This means that changes in
+    the predictor(s) produce proportional changes in the
     outcome.For homoscedasticity, the variance of the residuals (errors)
     should be constant across all levels of the independent variables.
 
@@ -243,10 +246,10 @@ summary(normal_model)
 plot(normal_model, which = 1)
 ```
 
-2.  Independence: The residuals (errors) from the model should be
+2.  Independence: The residuals (errors) from the model appear to be
     independent. This means that the error associated with one
     observation is not correlated with the error of another observation.
-    A value close to 2 indicates no autocorrelation.
+    A value close to 2 indicates no autocorrelation, and we get a DW value of 1.9764.
 
 ```{r}
 library(lmtest)
@@ -254,7 +257,7 @@ dwtest(normal_model)
 ```
 
 3.  Normality of Residuals: The residuals should be normally
-    distributed.
+    distributed, and we see from the qqplot that they follow the line of best fit. 
 
 ```{r}
 plot(normal_model, which = 2)
@@ -269,6 +272,8 @@ plot(normal_model, which = 2)
 VIF \< 5: Acceptable (low multicollinearity). VIF between 5 and 10:
 Moderate multicollinearity, may warrant investigation. VIF \> 10:
 Problematic (high multicollinearity), often considered a "bad" value.
+
+We see here in our results that we do not have any values greater than 5, which indicates to us that our variables are independent with low multicollinearity. 
 
 ```{r}
 library(car)
