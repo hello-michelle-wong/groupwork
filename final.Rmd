@@ -88,7 +88,7 @@ Key variables in the data set include:
     -   AMC: Areas of compression, classified as either LV or LVOT.
 
     -   Medical History: Binary indicators for conditions like coronary
-        artery diseas (hist1), congestive hearth failure (hist2),
+        artery disease (hist1), congestive heart failure (hist2),
         chronic kidney disease (hist3), diabetes mellitus (hist4), and
         myocardial infarction (hist5).
 
