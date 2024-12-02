@@ -269,9 +269,11 @@ plot(normal_model, which = 2)
     ANOVA, this is typically not an issue if the independent variables
     are categorical (factors), but in multiple regression, it could be.
 
-VIF \< 5: Acceptable (low multicollinearity). VIF between 5 and 10:
-Moderate multicollinearity, may warrant investigation. VIF \> 10:
-Problematic (high multicollinearity), often considered a "bad" value.
+VIF \< 5: Acceptable (low multicollinearity). 
+
+VIF between 5 and 10: Moderate multicollinearity, may warrant investigation. 
+
+VIF \> 10:Problematic (high multicollinearity), often considered a "bad" value.
 
 We see here in our results that we do not have any values greater than 5, which indicates to us that our variables are independent with low multicollinearity. 
 
