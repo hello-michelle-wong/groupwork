@@ -166,6 +166,7 @@ research question.
 
 ```{r}
 library(readxl)
+library(mosaic)
 data <- read_excel("cardiac_arrests.xlsx")
 #head(data)
 ```
@@ -219,34 +220,25 @@ cleaned_data <- na.omit(data)
 ```
 
 ### Assumptions Made:
+1.  Linearity and Homoscedasticity (Constant Variance) The relationship
+    between the predictors and the outcome are linear. This means that changes in
+    the predictors produce proportional changes in the
+    outcome.For homoscedasticity, the variance of the residuals
+    should be constant across all levels of the independent variables.
 
 ```{r}
-# Fit a linear regression model 
-
-# look into why it's 1 vs 2 
 normal_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + 
                           hist4 + hist5 + amc:hist1 + amc:hist2 + amc:hist3 + 
                           amc:hist4 + amc:hist5, 
                         data = cleaned_data)
 
-summary(normal_model)
-```
-
-1.  Linearity and Homoscedasticity (Constant Variance) The relationship
-    between the predictor(s) (independent variables) and the outcome
-    (dependent variable) should be linear. This means that changes in
-    the predictor(s) should produce proportional changes in the
-    outcome.For homoscedasticity, the variance of the residuals (errors)
-    should be constant across all levels of the independent variables.
-
-```{r}
 plot(normal_model, which = 1)
 ```
 
-2.  Independence: The residuals (errors) from the model should be
+2.  Independence: The residuals from the model appear to be
     independent. This means that the error associated with one
     observation is not correlated with the error of another observation.
-    A value close to 2 indicates no autocorrelation.
+    A value close to 2 indicates no autocorrelation, and we get a DW value of 1.9764.
 
 ```{r}
 library(lmtest)
@@ -254,7 +246,7 @@ dwtest(normal_model)
 ```
 
 3.  Normality of Residuals: The residuals should be normally
-    distributed.
+    distributed, and we see from the qqplot that they follow the line of best fit. 
 
 ```{r}
 plot(normal_model, which = 2)
@@ -264,16 +256,27 @@ plot(normal_model, which = 2)
     be highly correlated with each other. If they are, it becomes
     difficult to isolate the individual effects of each predictor. In
     ANOVA, this is typically not an issue if the independent variables
-    are categorical (factors), but in multiple regression, it could be.
+    are categorical and factors, but in multiple regression, it could be.
 
-VIF \< 5: Acceptable (low multicollinearity). VIF between 5 and 10:
-Moderate multicollinearity, may warrant investigation. VIF \> 10:
-Problematic (high multicollinearity), often considered a "bad" value.
+VIF \< 5: Acceptable (low multicollinearity). 
+
+VIF between 5 and 10: Moderate multicollinearity, may warrant investigation. 
+
+VIF \> 10:Problematic (high multicollinearity), often considered a "bad" value.
+
+We see here in our results that we do not have any values greater than 5, which indicates to us that our variables are independent with low multicollinearity. 
 
 ```{r}
 library(car)
 vif(normal_model, 'predictor')
 vif(normal_model)
+```
+
+### Early linear Regression Model with all possible interaction terms:
+
+Since the assumptions hold, we are able to use a linear regression model to examine the relationships between our variables. 
+```{r}
+summary(normal_model)
 ```
 
 ## Results
@@ -311,7 +314,6 @@ ggplot(cleaned_data, aes(x = etco2, fill = amc)) +
 
 Now let's look at how history of disease affects this relationships:
 
-
 ```{r}
 library(gridExtra)
 
@@ -336,6 +338,7 @@ ggplot(cleaned_data, aes(x = etco2, fill = amc)) +
   labs(title = "Density of EtCO2 Colored by AMC", subtitle = " Wrapped by History of *insert hist*", fill = "AMC", x = "EtCO2 (mmHg)", y = "Density")
 
 ```
+
 ### Exploratory/Descriptive Analysis: Main Statistical Analysis:
 
 The p-value (0.5541) for the F-test is larger than the typical
