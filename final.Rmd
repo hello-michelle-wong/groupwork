@@ -289,16 +289,10 @@ ggplot(cleaned_data, aes(x = amc, y = etco2))+
   ylim(0,30)
 ```
 
-```{r}
-favstats(cleaned_data$etco2[cleaned_data$amc=="LV"])
-favstats(cleaned_data$etco2[cleaned_data$amc=="LVOT/Aortic root"])
+```{r favstats}
+library(mosaic)
 
-#library(dplyr)
-#library(mosaic)
-
-#cleaned_data |>
-#  group_by(amc) |>
-#  favstats(etco2)
+favstats(etco2 ~ amc, data = cleaned_data)
 ```
 
 ```{r}
