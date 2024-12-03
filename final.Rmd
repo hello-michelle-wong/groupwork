@@ -372,7 +372,7 @@ new_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 +
                         data = cleaned_data)
 
 # Compare models, talk about clinical signficiance as why 
-anova(reduced_model, new_model)
+
 ```
 ### Box Plot Insights
 The box plots of EtCO2 by AMC across the different histories illustrate that patients that have compression over the LV have a larger range of EtCO2 values, as the median values around 15-20 mmHg are compare to the median values of those compressed over the LVOT/aortic root at 10-15 mmHg. Across these comorbidities, both the median and IQRs were similar between patients with and without the medical histories. This may suggest that history has a minimal influence on EtCO2 variability.
