@@ -235,15 +235,7 @@ normal_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 +
 plot(normal_model, which = 1)
 ```
 
-2.  Independence: The residuals from the model appear to be
-    independent. This means that the error associated with one
-    observation is not correlated with the error of another observation.
-    A value close to 2 indicates no autocorrelation, and we get a DW value of 1.9764.
-
-```{r}
-library(lmtest)
-dwtest(normal_model)
-```
+2. Independence: Looking at the plot above, the residuals from the model appear to be independent. The residuals seem to be randomly distributed and fluctuate evenly above and below zero. Although we should acknowledge that residual plots alone do not prove independence—they provide evidence for it.
 
 3.  Normality of Residuals: The residuals should be normally
     distributed, and we see from the qqplot that they follow the line of best fit. 
@@ -292,15 +284,11 @@ ggplot(cleaned_data, aes(x = amc, y = etco2))+
   ylim(0,30)
 ```
 
-<<<<<<< HEAD
+
 ```{r favstats}
-library(mosaic)
-=======
-```{r}
 library(mosaic)
 favstats(cleaned_data$etco2[cleaned_data$amc=="LV"])
 favstats(cleaned_data$etco2[cleaned_data$amc=="LVOT/Aortic root"])
->>>>>>> f3d5233b5c36a1f0fe986233a3ab92285c413511
 
 favstats(etco2 ~ amc, data = cleaned_data)
 ```
