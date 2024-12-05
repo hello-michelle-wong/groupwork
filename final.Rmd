@@ -114,7 +114,7 @@ analysis.
 The study cohort consisted of adult patients who had experienced
 in-hospital cardiac arrest and received CPR where TEE was used. The
 inclusion criteria required proper TEE imaging data to identify the
-precise location of AMC and valid measurements of EtCO2 levels. patients
+precise location of AMC and valid measurements of EtCO2 levels. Patients
 with any significant missing data were excluded. After pre-processing
 and cleaning, the data set included 106 valid observations (patients)
 for further analysis.
@@ -170,8 +170,6 @@ library(mosaic)
 data <- read_excel("cardiac_arrests.xlsx")
 #head(data)
 ```
-
-### Cleaning
 
 ```{r}
 library(dplyr)
