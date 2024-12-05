@@ -245,24 +245,46 @@ plot(normal_model, which = 1)
 plot(normal_model, which = 2)
 ```
 
-4.  No Perfect Multicollinearity: The independent variables should not
-    be highly correlated with each other. If they are, it becomes
-    difficult to isolate the individual effects of each predictor. In
-    ANOVA, this is typically not an issue if the independent variables
-    are categorical and factors, but in multiple regression, it could be.
+4. No Perfect Multicollinearity: In regression analysis, it is crucial that the independent variables are not highly correlated with one another, as this can make it challenging to isolate the individual effects of each predictor. While this is typically not an issue when the independent variables are categorical or factors in ANOVA, it becomes more relevant in multiple regression.
 
-VIF \< 5: Acceptable (low multicollinearity). 
+Variance Inflation Factor (VIF) is commonly used to assess multicollinearity. VIF < 5 indicates acceptable (low) multicollinearity. VIF between 5 and 10 signals moderate multicollinearity and may warrant further investigation. VIF > 10 is considered problematic (high multicollinearity), and such values should generally be avoided.
 
-VIF between 5 and 10: Moderate multicollinearity, may warrant investigation. 
-
-VIF \> 10:Problematic (high multicollinearity), often considered a "bad" value.
-
-We see here in our results that we do not have any values greater than 5, which indicates to us that our variables are independent with low multicollinearity. 
+In our analysis, the VIF values for all variables are well below 5, which indicates that there is no significant multicollinearity present in the model. This suggests that the predictor variables are independent, and we can confidently interpret their individual effects on the outcome.
 
 ```{r}
 library(car)
-vif(normal_model, 'predictor')
-vif(normal_model)
+#vif(normal_model, 'predictor')
+#vif(normal_model)
+library(gt)
+
+results <- data.frame(
+  Variable = c("amc", "hist1", "hist2", "hist3", "hist4", "hist5", 
+               "amc:hist1", "amc:hist2", "amc:hist3", "amc:hist4", "amc:hist5"),
+  Coefficient = c(1.8989, 3.6501, 2.1937, 2.6167, 1.9604, 4.0862, 
+                  3.9591, 2.3018, 3.2972, 3.5108, 4.3337)
+)
+
+# Create a publication-ready table using gt
+results %>%
+  gt() %>%
+  tab_header(
+    title = "Regression Coefficients for Model Variables and Interaction Terms"
+  ) %>%
+  cols_label(
+    Variable = "Variable",
+    Coefficient = "Coefficient Estimate"
+  ) %>%
+  tab_spanner(
+    label = "Model Variables and Interactions",
+    columns = vars(Variable, Coefficient)
+  ) %>%
+  tab_style(
+    style = list(
+      cell_text(weight = "bold", color = "black")
+    ),
+    locations = cells_column_labels(columns = vars(Variable, Coefficient))
+  )
+
 ```
 
 ### Early linear Regression Model with all possible interaction terms:
@@ -277,8 +299,6 @@ library(kableExtra)
 #summary(normal_model)
 
 model_summary <- tidy(normal_model)
-
-# Fit your model (if you haven't already)
 normal_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + hist4 + hist5 + 
                    amc:hist1 + amc:hist2 + amc:hist3 + amc:hist4 + amc:hist5, 
                    data = cleaned_data)
@@ -310,7 +330,6 @@ model_summary %>%
   column_spec(4, width = "2cm") %>%
   column_spec(5, width = "2cm") %>%
   column_spec(6, width = "1.5cm")
-
 ```
 
 ## Results
