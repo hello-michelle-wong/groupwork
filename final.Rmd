@@ -227,6 +227,7 @@ cleaned_data <- na.omit(data)
     should be constant across all levels of the independent variables.
 
 ```{r}
+
 normal_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + 
                           hist4 + hist5 + amc:hist1 + amc:hist2 + amc:hist3 + 
                           amc:hist4 + amc:hist5, 
@@ -266,9 +267,50 @@ vif(normal_model)
 
 ### Early linear Regression Model with all possible interaction terms:
 
-Since the assumptions hold, we are able to use a linear regression model to examine the relationships between our variables. 
+Since the assumptions hold, we are able to use a linear regression model to examine the relationships between our variables. The regression model we constructed investigates how the area of maximal compression (amc), history of various medical conditions (hist1 through hist5), and their interactions affect the end-tidal CO2 (etCO2) levels. We decided to retain the interaction terms between amc:hist1 (history of coronary artery disease) and amc:hist3 (history of chronic kidney disease) based on clinical reasoning, despite their lack of statistical significance. These interactions were included to explore potential nuanced effects on etCO2 levels that could be clinically meaningful. Although the coefficients for these interactions were not statistically significant, their retention helps ensure a comprehensive understanding of the relationships at play.
+
 ```{r}
-summary(normal_model)
+library(gt)
+library(dplyr)
+library(broom)
+library(kableExtra)
+#summary(normal_model)
+
+model_summary <- tidy(normal_model)
+
+# Fit your model (if you haven't already)
+normal_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + hist4 + hist5 + 
+                   amc:hist1 + amc:hist2 + amc:hist3 + amc:hist4 + amc:hist5, 
+                   data = cleaned_data)
+
+# Tidy the model output using broom
+model_summary <- tidy(normal_model)
+
+# Add significance stars manually
+model_summary <- model_summary %>%
+  mutate(
+    significance = case_when(
+      p.value < 0.001 ~ "***",
+      p.value < 0.01 ~ "**",
+      p.value < 0.05 ~ "*",
+      p.value < 0.1 ~ ".",
+      TRUE ~ " "
+    )
+  )
+
+# Create the table with kableExtra
+model_summary %>%
+  select(term, estimate, std.error, statistic, p.value, significance) %>%
+  kable("html", caption = "Regression Results for ETCO2") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                font_size = 12) %>%
+  column_spec(1, width = "3cm") %>%
+  column_spec(2, width = "2cm") %>%
+  column_spec(3, width = "2cm") %>%
+  column_spec(4, width = "2cm") %>%
+  column_spec(5, width = "2cm") %>%
+  column_spec(6, width = "1.5cm")
+
 ```
 
 ## Results
