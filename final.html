@@ -3033,31 +3033,23 @@ where transesophageal echocardiography (TEE) imaging was employed during
 CPR. This advanced imaging technique is used to identify the specific
 area of the chest targeted for compression to precisely classify the AMC
 - LV or LVOT.</p>
-<p>Key variables in the data set include:</p>
-<ul>
-<li><p>Dependent Variable:</p>
-<ul>
-<li>EtCO2: Measured during CPR, represents levels of exhaled CO2 and
-serves as a proxy for cardiac output.</li>
-</ul></li>
-<li><p>Independent Variables:</p>
-<ul>
-<li><p>AMC: Areas of compression, classified as either LV or
-LVOT.</p></li>
-<li><p>Medical History: Binary indicators for conditions like coronary
-artery disease (hist1), congestive heart failure (hist2), chronic kidney
-disease (hist3), diabetes mellitus (hist4), and myocardial infarction
-(hist5).</p></li>
-</ul></li>
-<li><p>Covariates:</p>
-<ul>
-<li><p>Demographics like race and gender.</p></li>
-<li><p>TEE operator experience level (e.g. attending physicain,
-resident, etc.).</p></li>
-<li><p>Type of CPR performed (manual, mechanical, alternating).</p></li>
-<li><p>Timing of cardiac arrest (known or approximated).</p></li>
-</ul></li>
-</ul>
+<p>The dependent variable in the dataset is EtCO2. Measured during CPR,
+EtCO2 represents levels of exhaled CO2 and serves as a proxy for cardiac
+output. The primary independent variable is AMC, the area of maximum
+chest compression and is classified into two categories: left ventricle
+(LV) and left ventricular outflow tract (LVOT). Additionally, the
+analysis accounts for medical history, captured through binary
+indicators for specific conditions such as coronary artery disease
+(hist1), congestive heart failure (hist2), chronic kidney disease
+(hist3), diabetes mellitus (hist4), and prior myocardial infarction
+(hist5).</p>
+<p>There are also covariates included in the dataset. These consist of
+demographic factors like race and gender, the experience level of the
+TEE operator (such as attending physician, resident, etc.), the type of
+CPR performed (manual, mechanical, or alternating), and the timing of
+cardiac arrest (known or approximated). These variables provide a
+comprehensive overview of the factors that might influence EtCO2 during
+CPR.</p>
 <p>First, the data set underwent pre-processing and cleaning, which
 included the removal of invalid data entries. The next step involved
 converting the numeric values flagged as outliers (e.g. placeholder
@@ -3081,14 +3073,10 @@ relationship between EtCO2 level and AMC. Interaction terms between AMC
 the the medical history variables were used in this model to assess
 whether the relationship between EtCO2 and AMC varied by the presence of
 5 specific pre-existing medical conditions.</p>
-<p>The analysis included two models:</p>
-<ul>
-<li><p>A reduced model, which included only the main effects of AMC and
-medical history.</p></li>
-<li><p>A full model, which included interaction terms to evaluate
-whether medical history affected the relationship between EtCO2 and
-AMC.</p></li>
-</ul>
+<p>The analysis included two models. First being a reduced model, which
+included only the main effects of AMC and medical history. The second is
+a full model, which included interaction terms to evaluate whether
+medical history affected the relationship between EtCO2 and AMC.</p>
 <p>An Analysis of Variance (ANOVA) test was used to compare these models
 and evaluate the contribution of the interaction terms to model fit.</p>
 </div>
@@ -3102,15 +3090,11 @@ LV. This specific approach allows for testing the main effects while
 including interaction terms to study more complex relationships. The
 inclusion of these interaction terms is very crucial for identifying
 whether specif medical histories alter the impact of AMC on EtCO2.</p>
-<p>Assumptions include:</p>
-<ul>
-<li><p>Linearity and Homoscedasticity: Checked via residual
-plots.</p></li>
-<li><p>Independence: Verified using the Durbin-Watson test.</p></li>
-<li><p>Normality of Residuals: Assessed through Q-Q plots.</p></li>
-<li><p>Multicollinearity: Evaluated using Variance Inflation Factors
-(VIF), with all predictors having suitable values (&lt; 5).</p></li>
-</ul>
+<p>The assumptions include linearity and homoscedasticity, which were
+checked via residual plots. Independence was verified using the
+Durbin-Watson test. The normality of residuals was assessed through Q-Q
+plots. Multicollinearity was evaluated using Variance Inflation Factors
+(VIF), with all predictors having suitable values (&lt; 5).</p>
 <p>This methodological approach addresses potential confounding factors
 and statistical validity while guaranteeing a thorough investigation of
 the research question.</p>
@@ -3155,20 +3139,20 @@ which indicates that there is no significant multicollinearity present
 in the model. This suggests that the predictor variables are
 independent, and we can confidently interpret their individual effects
 on the outcome.</p>
-<div id="snfnrcrbbf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#snfnrcrbbf table {
+<div id="dhjxwntipt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dhjxwntipt table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#snfnrcrbbf thead, #snfnrcrbbf tbody, #snfnrcrbbf tfoot, #snfnrcrbbf tr, #snfnrcrbbf td, #snfnrcrbbf th {
+#dhjxwntipt thead, #dhjxwntipt tbody, #dhjxwntipt tfoot, #dhjxwntipt tr, #dhjxwntipt td, #dhjxwntipt th {
 border-style: none;
 }
-#snfnrcrbbf p {
+#dhjxwntipt p {
 margin: 0;
 padding: 0;
 }
-#snfnrcrbbf .gt_table {
+#dhjxwntipt .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -3193,11 +3177,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#snfnrcrbbf .gt_caption {
+#dhjxwntipt .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#snfnrcrbbf .gt_title {
+#dhjxwntipt .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -3208,7 +3192,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#snfnrcrbbf .gt_subtitle {
+#dhjxwntipt .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -3219,7 +3203,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#snfnrcrbbf .gt_heading {
+#dhjxwntipt .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -3230,12 +3214,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#snfnrcrbbf .gt_bottom_border {
+#dhjxwntipt .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#snfnrcrbbf .gt_col_headings {
+#dhjxwntipt .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -3249,7 +3233,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#snfnrcrbbf .gt_col_heading {
+#dhjxwntipt .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3268,7 +3252,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#snfnrcrbbf .gt_column_spanner_outer {
+#dhjxwntipt .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3279,13 +3263,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#snfnrcrbbf .gt_column_spanner_outer:first-child {
+#dhjxwntipt .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#snfnrcrbbf .gt_column_spanner_outer:last-child {
+#dhjxwntipt .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#snfnrcrbbf .gt_column_spanner {
+#dhjxwntipt .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -3296,10 +3280,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#snfnrcrbbf .gt_spanner_row {
+#dhjxwntipt .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#snfnrcrbbf .gt_group_heading {
+#dhjxwntipt .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3324,7 +3308,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#snfnrcrbbf .gt_empty_group_heading {
+#dhjxwntipt .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -3338,13 +3322,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#snfnrcrbbf .gt_from_md > :first-child {
+#dhjxwntipt .gt_from_md > :first-child {
 margin-top: 0;
 }
-#snfnrcrbbf .gt_from_md > :last-child {
+#dhjxwntipt .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#snfnrcrbbf .gt_row {
+#dhjxwntipt .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3362,7 +3346,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#snfnrcrbbf .gt_stub {
+#dhjxwntipt .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3374,7 +3358,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#snfnrcrbbf .gt_stub_row_group {
+#dhjxwntipt .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3387,13 +3371,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#snfnrcrbbf .gt_row_group_first td {
+#dhjxwntipt .gt_row_group_first td {
 border-top-width: 2px;
 }
-#snfnrcrbbf .gt_row_group_first th {
+#dhjxwntipt .gt_row_group_first th {
 border-top-width: 2px;
 }
-#snfnrcrbbf .gt_summary_row {
+#dhjxwntipt .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3402,14 +3386,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#snfnrcrbbf .gt_first_summary_row {
+#dhjxwntipt .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#snfnrcrbbf .gt_first_summary_row.thick {
+#dhjxwntipt .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#snfnrcrbbf .gt_last_summary_row {
+#dhjxwntipt .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3418,7 +3402,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#snfnrcrbbf .gt_grand_summary_row {
+#dhjxwntipt .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3427,7 +3411,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#snfnrcrbbf .gt_first_grand_summary_row {
+#dhjxwntipt .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3436,7 +3420,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#snfnrcrbbf .gt_last_grand_summary_row_top {
+#dhjxwntipt .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3445,10 +3429,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#snfnrcrbbf .gt_striped {
+#dhjxwntipt .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#snfnrcrbbf .gt_table_body {
+#dhjxwntipt .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -3456,7 +3440,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#snfnrcrbbf .gt_footnotes {
+#dhjxwntipt .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3469,7 +3453,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#snfnrcrbbf .gt_footnote {
+#dhjxwntipt .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -3477,7 +3461,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#snfnrcrbbf .gt_sourcenotes {
+#dhjxwntipt .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3490,64 +3474,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#snfnrcrbbf .gt_sourcenote {
+#dhjxwntipt .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#snfnrcrbbf .gt_left {
+#dhjxwntipt .gt_left {
 text-align: left;
 }
-#snfnrcrbbf .gt_center {
+#dhjxwntipt .gt_center {
 text-align: center;
 }
-#snfnrcrbbf .gt_right {
+#dhjxwntipt .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#snfnrcrbbf .gt_font_normal {
+#dhjxwntipt .gt_font_normal {
 font-weight: normal;
 }
-#snfnrcrbbf .gt_font_bold {
+#dhjxwntipt .gt_font_bold {
 font-weight: bold;
 }
-#snfnrcrbbf .gt_font_italic {
+#dhjxwntipt .gt_font_italic {
 font-style: italic;
 }
-#snfnrcrbbf .gt_super {
+#dhjxwntipt .gt_super {
 font-size: 65%;
 }
-#snfnrcrbbf .gt_footnote_marks {
+#dhjxwntipt .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#snfnrcrbbf .gt_asterisk {
+#dhjxwntipt .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#snfnrcrbbf .gt_indent_1 {
+#dhjxwntipt .gt_indent_1 {
 text-indent: 5px;
 }
-#snfnrcrbbf .gt_indent_2 {
+#dhjxwntipt .gt_indent_2 {
 text-indent: 10px;
 }
-#snfnrcrbbf .gt_indent_3 {
+#dhjxwntipt .gt_indent_3 {
 text-indent: 15px;
 }
-#snfnrcrbbf .gt_indent_4 {
+#dhjxwntipt .gt_indent_4 {
 text-indent: 20px;
 }
-#snfnrcrbbf .gt_indent_5 {
+#dhjxwntipt .gt_indent_5 {
 text-indent: 25px;
 }
-#snfnrcrbbf .katex-display {
+#dhjxwntipt .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#snfnrcrbbf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#dhjxwntipt div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>

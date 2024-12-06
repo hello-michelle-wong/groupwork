@@ -3,6 +3,10 @@ title: "Final Report"
 author: "Group 5: Megan Lui, Michelle Wong, Yael Yossefy, Dirgh Shah"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
+  pdf_document:
+    toc: no
+  word_document:
+    toc: no
   html_document:
     df_print: paged
     toc: yes
@@ -12,10 +16,6 @@ output:
     toc_float:
       collapsed: yes
       smooth_scroll: yes
-  word_document:
-    toc: no
-  pdf_document:
-    toc: no
 editor_options: 
   markdown: 
     wrap: 72
@@ -76,32 +76,24 @@ This advanced imaging technique is used to identify the specific area of
 the chest targeted for compression to precisely classify the AMC - LV or
 LVOT.
 
-Key variables in the data set include:
+The dependent variable in the dataset is EtCO2. Measured during CPR,
+EtCO2 represents levels of exhaled CO2 and serves as a proxy for cardiac
+output. The primary independent variable is AMC, the area of maximum
+chest compression and is classified into two categories: left ventricle
+(LV) and left ventricular outflow tract (LVOT). Additionally, the
+analysis accounts for medical history, captured through binary
+indicators for specific conditions such as coronary artery disease
+(hist1), congestive heart failure (hist2), chronic kidney disease
+(hist3), diabetes mellitus (hist4), and prior myocardial infarction
+(hist5).
 
--   Dependent Variable:
-
-    -   EtCO2: Measured during CPR, represents levels of exhaled CO2 and
-        serves as a proxy for cardiac output.
-
--   Independent Variables:
-
-    -   AMC: Areas of compression, classified as either LV or LVOT.
-
-    -   Medical History: Binary indicators for conditions like coronary
-        artery disease (hist1), congestive heart failure (hist2),
-        chronic kidney disease (hist3), diabetes mellitus (hist4), and
-        myocardial infarction (hist5).
-
--   Covariates:
-
-    -   Demographics like race and gender.
-
-    -   TEE operator experience level (e.g. attending physicain,
-        resident, etc.).
-
-    -   Type of CPR performed (manual, mechanical, alternating).
-
-    -   Timing of cardiac arrest (known or approximated).
+There are also covariates included in the dataset. These consist of
+demographic factors like race and gender, the experience level of the
+TEE operator (such as attending physician, resident, etc.), the type of
+CPR performed (manual, mechanical, or alternating), and the timing of
+cardiac arrest (known or approximated). These variables provide a
+comprehensive overview of the factors that might influence EtCO2 during
+CPR.
 
 First, the data set underwent pre-processing and cleaning, which
 included the removal of invalid data entries. The next step involved
@@ -127,13 +119,10 @@ medical history variables were used in this model to assess whether the
 relationship between EtCO2 and AMC varied by the presence of 5 specific
 pre-existing medical conditions.
 
-The analysis included two models:
-
--   A reduced model, which included only the main effects of AMC and
-    medical history.
-
--   A full model, which included interaction terms to evaluate whether
-    medical history affected the relationship between EtCO2 and AMC.
+The analysis included two models. First being a reduced model, which
+included only the main effects of AMC and medical history. The second is
+a full model, which included interaction terms to evaluate whether
+medical history affected the relationship between EtCO2 and AMC.
 
 An Analysis of Variance (ANOVA) test was used to compare these models
 and evaluate the contribution of the interaction terms to model fit.
@@ -149,16 +138,11 @@ including interaction terms to study more complex relationships. The
 inclusion of these interaction terms is very crucial for identifying
 whether specif medical histories alter the impact of AMC on EtCO2.
 
-Assumptions include:
-
--   Linearity and Homoscedasticity: Checked via residual plots.
-
--   Independence: Verified using the Durbin-Watson test.
-
--   Normality of Residuals: Assessed through Q-Q plots.
-
--   Multicollinearity: Evaluated using Variance Inflation Factors (VIF),
-    with all predictors having suitable values (\< 5).
+The assumptions include linearity and homoscedasticity, which were
+checked via residual plots. Independence was verified using the
+Durbin-Watson test. The normality of residuals was assessed through Q-Q
+plots. Multicollinearity was evaluated using Variance Inflation Factors
+(VIF), with all predictors having suitable values (\< 5).
 
 This methodological approach addresses potential confounding factors and
 statistical validity while guaranteeing a thorough investigation of the
@@ -218,11 +202,12 @@ cleaned_data <- na.omit(data)
 ```
 
 ### Assumptions Made:
+
 1.  Linearity and Homoscedasticity (Constant Variance) The relationship
-    between the predictors and the outcome are linear. This means that changes in
-    the predictors produce proportional changes in the
-    outcome.For homoscedasticity, the variance of the residuals
-    should be constant across all levels of the independent variables.
+    between the predictors and the outcome are linear. This means that
+    changes in the predictors produce proportional changes in the
+    outcome.For homoscedasticity, the variance of the residuals should
+    be constant across all levels of the independent variables.
 
 ```{r}
 
@@ -234,20 +219,39 @@ normal_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 +
 plot(normal_model, which = 1)
 ```
 
-2. Independence: Looking at the plot above, the residuals from the model appear to be independent. The residuals seem to be randomly distributed and fluctuate evenly above and below zero. Although we should acknowledge that residual plots alone do not prove independence—they provide evidence for it.
+2.  Independence: Looking at the plot above, the residuals from the
+    model appear to be independent. The residuals seem to be randomly
+    distributed and fluctuate evenly above and below zero. Although we
+    should acknowledge that residual plots alone do not prove
+    independence—they provide evidence for it.
 
 3.  Normality of Residuals: The residuals should be normally
-    distributed, and we see from the qqplot that they follow the line of best fit. 
+    distributed, and we see from the qqplot that they follow the line of
+    best fit.
 
 ```{r}
 plot(normal_model, which = 2)
 ```
 
-4. No Perfect Multicollinearity: In regression analysis, it is crucial that the independent variables are not highly correlated with one another, as this can make it challenging to isolate the individual effects of each predictor. While this is typically not an issue when the independent variables are categorical or factors in ANOVA, it becomes more relevant in multiple regression.
+4.  No Perfect Multicollinearity: In regression analysis, it is crucial
+    that the independent variables are not highly correlated with one
+    another, as this can make it challenging to isolate the individual
+    effects of each predictor. While this is typically not an issue when
+    the independent variables are categorical or factors in ANOVA, it
+    becomes more relevant in multiple regression.
 
-Variance Inflation Factor (VIF) is commonly used to assess multicollinearity. VIF < 5 indicates acceptable (low) multicollinearity. VIF between 5 and 10 signals moderate multicollinearity and may warrant further investigation. VIF > 10 is considered problematic (high multicollinearity), and such values should generally be avoided.
+Variance Inflation Factor (VIF) is commonly used to assess
+multicollinearity. VIF \< 5 indicates acceptable (low)
+multicollinearity. VIF between 5 and 10 signals moderate
+multicollinearity and may warrant further investigation. VIF \> 10 is
+considered problematic (high multicollinearity), and such values should
+generally be avoided.
 
-In our analysis, the VIF values for all variables are well below 5, which indicates that there is no significant multicollinearity present in the model. This suggests that the predictor variables are independent, and we can confidently interpret their individual effects on the outcome.
+In our analysis, the VIF values for all variables are well below 5,
+which indicates that there is no significant multicollinearity present
+in the model. This suggests that the predictor variables are
+independent, and we can confidently interpret their individual effects
+on the outcome.
 
 ```{r}
 library(car)
@@ -287,7 +291,19 @@ results %>%
 
 ### Early linear Regression Model with all possible interaction terms:
 
-Since the assumptions hold, we are able to use a linear regression model to examine the relationships between our variables. The regression model we constructed investigates how the area of maximal compression (amc), history of various medical conditions (hist1 through hist5), and their interactions affect the end-tidal CO2 (etCO2) levels. We decided to retain the interaction terms between amc:hist1 (history of coronary artery disease) and amc:hist3 (history of chronic kidney disease) based on clinical reasoning, despite their lack of statistical significance. These interactions were included to explore potential nuanced effects on etCO2 levels that could be clinically meaningful. Although the coefficients for these interactions were not statistically significant, their retention helps ensure a comprehensive understanding of the relationships at play.
+Since the assumptions hold, we are able to use a linear regression model
+to examine the relationships between our variables. The regression model
+we constructed investigates how the area of maximal compression (amc),
+history of various medical conditions (hist1 through hist5), and their
+interactions affect the end-tidal CO2 (etCO2) levels. We decided to
+retain the interaction terms between amc:hist1 (history of coronary
+artery disease) and amc:hist3 (history of chronic kidney disease) based
+on clinical reasoning, despite their lack of statistical significance.
+These interactions were included to explore potential nuanced effects on
+etCO2 levels that could be clinically meaningful. Although the
+coefficients for these interactions were not statistically significant,
+their retention helps ensure a comprehensive understanding of the
+relationships at play.
 
 ```{r}
 library(gt)
@@ -334,7 +350,8 @@ model_summary %>%
 
 ### Tables Figures Statistics
 
-First, let's look at the relationship between AMC and EtCO2, without accounting for different histories of disease.
+First, let's look at the relationship between AMC and EtCO2, without
+accounting for different histories of disease.
 
 ```{r}
 ggplot(cleaned_data, aes(x = amc, y = etco2))+
@@ -342,7 +359,6 @@ ggplot(cleaned_data, aes(x = amc, y = etco2))+
   labs(x = "AMC", y = "EtCO2", title = "BoxPlots of EtCO2 vs. AMC") + 
   ylim(0,30)
 ```
-
 
 ```{r favstats}
 library(mosaic)
@@ -421,35 +437,122 @@ new_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 +
 # Compare models, talk about clinical signficiance as why 
 
 ```
+
 ### Box Plot Insights
-The box plots of EtCO2 by AMC across the different histories illustrate that patients that have compression over the LV have a larger range of EtCO2 values, as the median values around 15-20 mmHg are compare to the median values of those compressed over the LVOT/aortic root at 10-15 mmHg. Across these comorbidities, both the median and IQRs were similar between patients with and without the medical histories. This may suggest that history has a minimal influence on EtCO2 variability.
+
+The box plots of EtCO2 by AMC across the different histories illustrate
+that patients that have compression over the LV have a larger range of
+EtCO2 values, as the median values around 15-20 mmHg are compare to the
+median values of those compressed over the LVOT/aortic root at 10-15
+mmHg. Across these comorbidities, both the median and IQRs were similar
+between patients with and without the medical histories. This may
+suggest that history has a minimal influence on EtCO2 variability.
 
 ### Density Plot Observations
-The density plots show that there is a slightly higher concentration of low EtCO2 values (from 5-15 mmHg) in the LVOT/aortic root compared to the LV that has a more even distribution from 10-25 mmHg. For reference, awake and healthy adults normally have a range of 35-45 mmHG of EtCO2. There is no clear shift in these density patterns across the different histories, reinforcing both the statistical findings and box plots that medical history does not significantly affect the EtCO2 levels. Though EtCO2 values are similar between those with and without diseases across both LV and LVOT/aortc root, the proportional density differences in the LVOT/aortic root suggests that perfusion impairments in the area impacts EtCO2 dynamics more than LV. Disease that affect the circulation and gas exchange have a more pronounced effect on the aortic root as well. This leads to higher density proportions at lower EtCO2 value. As the statistical tests show no overall significant effect of disease on EtCo2, these patterns may be due to anatomical sensitivity or local perfusion effects than the impact of history. 
+
+The density plots show that there is a slightly higher concentration of
+low EtCO2 values (from 5-15 mmHg) in the LVOT/aortic root compared to
+the LV that has a more even distribution from 10-25 mmHg. For reference,
+awake and healthy adults normally have a range of 35-45 mmHG of EtCO2.
+There is no clear shift in these density patterns across the different
+histories, reinforcing both the statistical findings and box plots that
+medical history does not significantly affect the EtCO2 levels. Though
+EtCO2 values are similar between those with and without diseases across
+both LV and LVOT/aortc root, the proportional density differences in the
+LVOT/aortic root suggests that perfusion impairments in the area impacts
+EtCO2 dynamics more than LV. Disease that affect the circulation and gas
+exchange have a more pronounced effect on the aortic root as well. This
+leads to higher density proportions at lower EtCO2 value. As the
+statistical tests show no overall significant effect of disease on
+EtCo2, these patterns may be due to anatomical sensitivity or local
+perfusion effects than the impact of history.
 
 #### Density Plot Observations: Understanding the history and EtCO2 levels
-Patients with certain pre-existing conditions may already have higher EtCO2 values, independent of compressing the amcs. For those with CAD, CHF, lower EtCO2 values are due to the impaired coronary perfusion, impairing the heart's ability to effectively pump blood and clear CO2 from the body. Those with CKD, the disease has a much higher proportion of the same EtCO2 value compared to those wihtout CKD, reflecting potential renal dysfunction and thus electrolyte imbalances. This causes body fluid and perfusion to not work as effectively, causing a higher density of patients to have lower EtCO2. Those with DM also has a higher density proportion and slighlty higher EtCO2 values at the same EtCO2 values without DM, as the vascular changes alteres CO2 handling and perfusion efficinecy. Interestingly, both people with and without MI have higher densities, though those with a history has slightly higher proportion of low EtCO2 levels, as a previous MI causes lasting damages to the heart's ability to effectively pump blood and clear CO2. 
+
+Patients with certain pre-existing conditions may already have higher
+EtCO2 values, independent of compressing the amcs. For those with CAD,
+CHF, lower EtCO2 values are due to the impaired coronary perfusion,
+impairing the heart's ability to effectively pump blood and clear CO2
+from the body. Those with CKD, the disease has a much higher proportion
+of the same EtCO2 value compared to those wihtout CKD, reflecting
+potential renal dysfunction and thus electrolyte imbalances. This causes
+body fluid and perfusion to not work as effectively, causing a higher
+density of patients to have lower EtCO2. Those with DM also has a higher
+density proportion and slighlty higher EtCO2 values at the same EtCO2
+values without DM, as the vascular changes alteres CO2 handling and
+perfusion efficinecy. Interestingly, both people with and without MI
+have higher densities, though those with a history has slightly higher
+proportion of low EtCO2 levels, as a previous MI causes lasting damages
+to the heart's ability to effectively pump blood and clear CO2.
 
 ## Conclusions
-### Main Findings: 
-Investigating the impact of patient history (including coronary artery disease (CAD), congestive heart failure (CHF), chronic kidney disease (CKD), diabetes mellitus (DM), and myocardial infarcation (MCI)) on EtCO2 levels in both the left ventricle and LVOT/aortic root, our findings revealed that there was no statistically significant difference across all groups. Across the multivariable linear model and ANOVA tests, density plots, and box plots, the results were consistent, suggesting that the patient history does not substantially influence EtCO2 levels. 
 
+### Main Findings:
+
+Investigating the impact of patient history (including coronary artery
+disease (CAD), congestive heart failure (CHF), chronic kidney disease
+(CKD), diabetes mellitus (DM), and myocardial infarcation (MCI)) on
+EtCO2 levels in both the left ventricle and LVOT/aortic root, our
+findings revealed that there was no statistically significant difference
+across all groups. Across the multivariable linear model and ANOVA
+tests, density plots, and box plots, the results were consistent,
+suggesting that the patient history does not substantially influence
+EtCO2 levels.
 
 ### Clinical Significance
-Our results suggest that EtCO2 levels are not significantly affected by the different histories, though patients with these different chronic disease may have higher EtCO2 values due to already mentioned compensatory mechanisms. Overall, EtCO2 remains a general marker for cardiac output and blood perfusion during CPR, regardless of the patient's history. As compressions over the LV, compared to LVOT/aortic root, lead to better prognosis with slightly higher EtCO2, optimizing the amc or compression location is crucical for maximizing blood flow and prognosis. 
+
+Our results suggest that EtCO2 levels are not significantly affected by
+the different histories, though patients with these different chronic
+disease may have higher EtCO2 values due to already mentioned
+compensatory mechanisms. Overall, EtCO2 remains a general marker for
+cardiac output and blood perfusion during CPR, regardless of the
+patient's history. As compressions over the LV, compared to LVOT/aortic
+root, lead to better prognosis with slightly higher EtCO2, optimizing
+the amc or compression location is crucical for maximizing blood flow
+and prognosis.
 
 ### Limitations and Future Directions
-With approximately 106 valid observations after cleaning the data, the are statistically valid. However, having a larger cohort can provide more representative and generalization insight. In addition, there are some measurement constraints, where EtCO2 was measured during CPR, a highly volatile and unpredictable event. There are many dynamic factors and other confounding factors, such as compression rate, depth, and different ventilation that may introduce some variability that the model does not account for. Future studies in this field can explore how other physiological markers, such as blood pressure or ventilation practices, can examine how real time changes in CPR methodologies influence EtCO2 and prognosis of these patients. 
 
-Overall, though medical history does not statistically influence the relationship between AMC and EtCO2, those with these chronic conditions may show slightly lower or higher EtCO2 values due to its own physiological mechanisms, highlighting the focus on AMC and optimizing the quality of compression during CPR. 
+With approximately 106 valid observations after cleaning the data, the
+are statistically valid. However, having a larger cohort can provide
+more representative and generalization insight. In addition, there are
+some measurement constraints, where EtCO2 was measured during CPR, a
+highly volatile and unpredictable event. There are many dynamic factors
+and other confounding factors, such as compression rate, depth, and
+different ventilation that may introduce some variability that the model
+does not account for. Future studies in this field can explore how other
+physiological markers, such as blood pressure or ventilation practices,
+can examine how real time changes in CPR methodologies influence EtCO2
+and prognosis of these patients.
 
+Overall, though medical history does not statistically influence the
+relationship between AMC and EtCO2, those with these chronic conditions
+may show slightly lower or higher EtCO2 values due to its own
+physiological mechanisms, highlighting the focus on AMC and optimizing
+the quality of compression during CPR.
 
 ## Citations/References
-Baloch K, Rehman Memon A, Ikhlaq U, Umair M, Ansari MI, Abubaker J, Salahuddin N. Assessing the Utility of End-Tidal Carbon Dioxide as a Marker for Fluid Responsiveness in Cardiogenic Shock. Cureus. 2021 Feb 5;13(2):e13164. doi: 10.7759/cureus.13164. PMID: 33692926; PMCID: PMC7938016.
 
-Taghizadieh A, Pouraghaei M, Moharamzadeh P, Ala A, Rahmani F, Basiri Sofiani K. Comparison of end-tidal carbon dioxide and arterial blood bicarbonate levels in patients with metabolic acidosis referred to emergency medicine. J Cardiovasc Thorac Res. 2016;8(3):98-101. doi: 10.15171/jcvtr.2016.21. Epub 2016 Sep 30. PMID: 27777693; PMCID: PMC5075365.
+Baloch K, Rehman Memon A, Ikhlaq U, Umair M, Ansari MI, Abubaker J,
+Salahuddin N. Assessing the Utility of End-Tidal Carbon Dioxide as a
+Marker for Fluid Responsiveness in Cardiogenic Shock. Cureus. 2021 Feb
+5;13(2):e13164. doi: 10.7759/cureus.13164. PMID: 33692926; PMCID:
+PMC7938016.
 
-Tepe M, Hakkoymaz H, Kilci Aİ, Gedik MS, Öztürk C, Gökçe MK, Aykan AÇ. Evaluation of the relationship between end-tidal carbon dioxide level and heart failure classification. Rev Assoc Med Bras (1992). 2024 May 20;70(5):e20231499. doi: 10.1590/1806-9282.20231499. PMID: 38775509; PMCID: PMC11110962.
+Taghizadieh A, Pouraghaei M, Moharamzadeh P, Ala A, Rahmani F, Basiri
+Sofiani K. Comparison of end-tidal carbon dioxide and arterial blood
+bicarbonate levels in patients with metabolic acidosis referred to
+emergency medicine. J Cardiovasc Thorac Res. 2016;8(3):98-101. doi:
+10.15171/jcvtr.2016.21. Epub 2016 Sep 30. PMID: 27777693; PMCID:
+PMC5075365.
 
-Ölander CH, Vikholm P, Schiller P, Hellgren L. End-Tidal Carbon Dioxide Impacts Brain and Kidney Injury in Experimental Extracorporeal Cardiopulmonary Resuscitation (ECPR). Shock. 2021 Apr 1;55(4):563-569. doi: 10.1097/SHK.0000000000001645. PMID: 32826810.
+Tepe M, Hakkoymaz H, Kilci Aİ, Gedik MS, Öztürk C, Gökçe MK, Aykan AÇ.
+Evaluation of the relationship between end-tidal carbon dioxide level
+and heart failure classification. Rev Assoc Med Bras (1992). 2024 May
+20;70(5):e20231499. doi: 10.1590/1806-9282.20231499. PMID: 38775509;
+PMCID: PMC11110962.
 
+Ölander CH, Vikholm P, Schiller P, Hellgren L. End-Tidal Carbon Dioxide
+Impacts Brain and Kidney Injury in Experimental Extracorporeal
+Cardiopulmonary Resuscitation (ECPR). Shock. 2021 Apr 1;55(4):563-569.
+doi: 10.1097/SHK.0000000000001645. PMID: 32826810.

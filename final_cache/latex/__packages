@@ -6,3 +6,12 @@ zoo
 lmtest
 carData
 car
+lattice
+Matrix
+ggformula
+mosaicData
+mosaic
+gt
+broom
+kableExtra
+gridExtra
