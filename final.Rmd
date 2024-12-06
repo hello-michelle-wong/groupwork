@@ -3,10 +3,6 @@ title: "Final Report"
 author: "Group 5: Megan Lui, Michelle Wong, Yael Yossefy, Dirgh Shah"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
-  pdf_document:
-    toc: no
-  word_document:
-    toc: no
   html_document:
     df_print: paged
     toc: yes
@@ -16,13 +12,22 @@ output:
     toc_float:
       collapsed: yes
       smooth_scroll: yes
-editor_options: 
-  markdown: 
-    wrap: 72
+  pdf_document:
+    toc: no
+  word_document:
+    toc: no
+always_allow_html: true
 ---
 
-```{r,echo=FALSE}
-knitr::opts_chunk$set(cache=TRUE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, tidy.opts=list(width.cutoff=60),tidy=TRUE)
+```{r}
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  error = FALSE, 
+  message = FALSE, 
+  warning = FALSE, 
+  tidy.opts = list(width.cutoff = 60),
+  tidy = TRUE
+)
 ```
 
 ## Introduction
@@ -159,6 +164,7 @@ data <- read_excel("cardiac_arrests.xlsx")
 library(dplyr)
 library(ggplot2)
 library(tidyr)
+#library(kableExtra)
 
 data <- data %>%
   mutate(across(where(is.numeric), ~ replace(.x, .x == 9999, NA))) 
@@ -210,7 +216,6 @@ cleaned_data <- na.omit(data)
     be constant across all levels of the independent variables.
 
 ```{r}
-
 normal_model <- lm(etco2 ~ amc + hist1 + hist2 + hist3 + 
                           hist4 + hist5 + amc:hist1 + amc:hist2 + amc:hist3 + 
                           amc:hist4 + amc:hist5, 
